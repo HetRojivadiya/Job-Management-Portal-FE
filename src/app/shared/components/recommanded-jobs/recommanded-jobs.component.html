@@ -1,0 +1,28 @@
+<div class="space-y-4">
+<!-- Similar Job Card 1 -->
+<div *ngFor="let job of recommendedJobs" class="border rounded-lg p-4 bg-white shadow-sm hover:shadow-md transition-shadow">
+  <a [routerLink]="['/job-details',job.id]">
+    <div class="flex items-start justify-between">
+      <div class="flex gap-4">
+        <div class="w-12 h-12 rounded-lg flex items-center justify-center" [ngClass]="job.colorClass">
+          <span class="text-white text-xl">{{ job.title.charAt(0) }}</span>
+        </div>
+        <div>
+          <h3 class="font-semibold text-gray-800">{{job.title}}</h3>
+          <div class="flex gap-4 mt-2">
+            <span class="text-gray-600">Fulltime</span>
+            <span class="text-gray-600">{{job.location}}</span>
+            <span class="text-gray-600">{{job.experience_level}} Years</span>
+          </div>
+          <p class="text-gray-500 text-sm mt-2">{{job.createdAt | timeAgo }}   • 521 Applicants</p>
+        </div>
+      </div>
+      <button class="p-2 text-gray-400 hover:text-yellow-500">
+        <svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 5a2 2 0 012-2h10a2 2 0 012 2v16l-7-3.5L5 21V5z" />
+        </svg>
+      </button>
+    </div>
+   </a>
+  </div>
+</div>

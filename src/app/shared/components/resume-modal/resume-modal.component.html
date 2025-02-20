@@ -1,0 +1,19 @@
+<div *ngIf="showModal" class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
+    <div class="bg-white p-6 rounded-lg w-80 text-center shadow-lg">
+      <div class="text-xl font-semibold mb-4">
+        <span *ngIf="type === 'success'" class="text-green-500">✔️ Success</span>
+        <span *ngIf="type === 'error'" class="text-red-500">❌ Error</span>
+        <span *ngIf="type === 'warning'" class="text-yellow-500">⚠️ Warning</span>
+      </div>
+      <p class="text-gray-700 mb-4">{{ message }}</p>
+      <div class="flex justify-center gap-4">
+        <button (click)="close()" class="px-4 py-2 bg-gray-500 text-white rounded-md hover:bg-gray-600">
+          Close
+        </button>
+        <button *ngIf="type === 'warning'" (click)="confirm()" class="px-4 py-2 bg-green-500 text-white rounded-md hover:bg-green-600">
+          Confirm
+        </button>
+      </div>
+    </div>
+  </div>
+  

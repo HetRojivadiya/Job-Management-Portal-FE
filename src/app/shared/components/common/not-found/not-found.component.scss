@@ -1,0 +1,62 @@
+@import url('https://fonts.googleapis.com/css2?family=Arvo&display=swap');
+
+/* 404 Page Styles */
+.page_404 {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100vh;
+  background: #fff;
+  font-family: 'Arvo', serif;
+  text-align: center;
+  flex-direction: column;
+}
+
+.four_zero_four_bg {
+  background-image: url('https://cdn.dribbble.com/users/285475/screenshots/2083086/dribbble_1.gif');
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: contain; /* Ensures the image fits */
+  height: 400px;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.four_zero_four_bg h1 {
+  font-size: 100px;
+  color: #263238;
+  position: absolute;
+  top: 15%;
+}
+
+.contant_box_404 {
+  margin-top: 20px;
+}
+
+.contant_box_404 h3 {
+  font-size: 28px;
+  font-weight: bold;
+  margin-bottom: 10px;
+}
+
+.contant_box_404 p {
+  font-size: 18px;
+  color: #333;
+}
+
+.link_404 {
+  color: #fff !important;
+  padding: 12px 24px;
+  background: #39ac31;
+  border-radius: 5px;
+  font-size: 18px;
+  text-decoration: none;
+  margin-top: 20px;
+  display: inline-block;
+}
+
+.link_404:hover {
+  background: #2d8f26;
+}

@@ -1,0 +1,29 @@
+<app-job-list 
+  [jobs]="jobs"
+  [isAdmin]="isAdmin"
+  (editJob)="openEditModal($event)"
+  (deleteJob)="openDeleteModal($event)"
+  (applyJob)="openApplyModal($event)">
+</app-job-list>
+
+<app-job-update-modal
+  *ngIf="isModalOpen"
+  [job]="selectedJob"
+  (closeModal)="closeModal()"
+  (jobUpdated)="handleJobUpdated()">
+</app-job-update-modal>
+
+<app-confirm-dialog
+  *ngIf="isDeleteModalOpen"
+  message="Are you sure you want to delete this job?"
+  (confirm)="confirmDelete()"
+  (cancel)="closeDeleteModal()">
+</app-confirm-dialog>
+
+
+<app-job-apply-modal
+  *ngIf="isApplyModalOpen"
+  [jobId]="selectedJobId"
+  (closeModal)="closeApplyModal()"
+  (jobApplied)="handleJobApplied()">
+</app-job-apply-modal>

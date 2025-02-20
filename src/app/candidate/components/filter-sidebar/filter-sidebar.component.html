@@ -1,0 +1,150 @@
+<div class="bg-white shadow-lg p-6 rounded-lg border border-gray-200">
+    <h2 class="text-xl font-semibold mb-6 text-blue-700 flex items-center">
+      <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 4a1 1 0 011-1h16a1 1 0 011 1v2.586a1 1 0 01-.293.707l-6.414 6.414a1 1 0 00-.293.707V17l-4 4v-6.586a1 1 0 00-.293-.707L3.293 7.293A1 1 0 013 6.586V4z" />
+      </svg>
+      Job Filters
+    </h2>
+  
+    <!-- Job Type Filter -->
+    <div class="mb-6">
+      <h3 class="text-md font-medium text-gray-700 mb-2">Job Type</h3>
+      <div class="space-y-2">
+        <label class="flex items-center space-x-3 transition-all hover:bg-blue-50 p-2 rounded-md cursor-pointer">
+          <input type="checkbox" class="form-checkbox h-5 w-5 text-blue-600 rounded focus:ring-blue-500" (change)="applyFilters()" />
+          <span class="text-gray-800">Remote</span>
+        </label>
+        <label class="flex items-center space-x-3 transition-all hover:bg-blue-50 p-2 rounded-md cursor-pointer">
+          <input type="checkbox" class="form-checkbox h-5 w-5 text-blue-600 rounded focus:ring-blue-500" (change)="applyFilters()" />
+          <span class="text-gray-800">Onsite</span>
+        </label>
+        <label class="flex items-center space-x-3 transition-all hover:bg-blue-50 p-2 rounded-md cursor-pointer">
+          <input type="checkbox" class="form-checkbox h-5 w-5 text-blue-600 rounded focus:ring-blue-500" (change)="applyFilters()" />
+          <span class="text-gray-800">Hybrid</span>
+        </label>
+      </div>
+    </div>
+  
+    <!-- Experience Level Filter -->
+    <div class="mb-6">
+      <h3 class="text-md font-medium text-gray-700 mb-2">Experience Level</h3>
+      <div class="space-y-2">
+        <label class="flex items-center space-x-3 transition-all hover:bg-blue-50 p-2 rounded-md cursor-pointer">
+          <input type="checkbox" class="form-checkbox h-5 w-5 text-blue-600 rounded focus:ring-blue-500" (change)="applyFilters()" />
+          <span class="text-gray-800">Entry Level (0-2 years)</span>
+        </label>
+        <label class="flex items-center space-x-3 transition-all hover:bg-blue-50 p-2 rounded-md cursor-pointer">
+          <input type="checkbox" class="form-checkbox h-5 w-5 text-blue-600 rounded focus:ring-blue-500" (change)="applyFilters()" />
+          <span class="text-gray-800">Mid Level (3-5 years)</span>
+        </label>
+        <label class="flex items-center space-x-3 transition-all hover:bg-blue-50 p-2 rounded-md cursor-pointer">
+          <input type="checkbox" class="form-checkbox h-5 w-5 text-blue-600 rounded focus:ring-blue-500" (change)="applyFilters()" />
+          <span class="text-gray-800">Senior Level (6+ years)</span>
+        </label>
+      </div>
+    </div>
+  
+    <!-- Salary Range Filter -->
+    <div class="mb-6">
+        <h3 class="text-md font-medium text-gray-700 mb-2">Salary Range</h3>
+        
+        <div class="space-y-3">
+          <!-- Min and Max Salary Labels -->
+          <div class="flex justify-between text-sm text-gray-600">
+            <span>₹10,000</span>
+            <span>₹500,000</span>
+          </div>
+      
+          <!-- Salary Range Slider -->
+          <input 
+            type="range" 
+            min="10000" 
+            max="500000" 
+            step="10000"
+            [(ngModel)]="filters.salary"
+            class="w-full h-2 rounded-lg appearance-none cursor-pointer"
+            [style.background]="getSliderBackground()"
+            (input)="updateSalaryLabel()"
+            (change)="applyFilters()" 
+          />
+      
+          <!-- Selected Salary Label -->
+          <p class="text-blue-700 font-medium">₹{{ filters.salary }}</p>
+        </div>
+      </div>
+      
+  
+    <!-- Skills Filter -->
+    <div class="mb-6">
+      <h3 class="text-md font-medium text-gray-700 mb-2">Skills</h3>
+      <div class="relative">
+        <select 
+          (change)="applyFilters()" 
+          class="block appearance-none w-full bg-white border border-gray-300 hover:border-blue-500 px-4 py-2 pr-8 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+        >
+          <option value="">All Skills</option>
+          <option value="JavaScript">JavaScript</option>
+          <option value="TypeScript">TypeScript</option>
+          <option value="React">React</option>
+          <option value="Angular">Angular</option>
+          <option value="Vue">Vue.js</option>
+          <option value="Java">Java</option>
+          <option value="Python">Python</option>
+          <option value="Ruby">Ruby</option>
+          <option value="NestJS">NestJS</option>
+          <option value="Node.js">Node.js</option>
+          <option value="PHP">PHP</option>
+          <option value="Swift">Swift</option>
+          <option value="Flutter">Flutter</option>
+        </select>
+        <div class="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-gray-700">
+          <svg class="h-4 w-4" fill="currentColor" viewBox="0 0 20 20">
+            <path d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z"></path>
+          </svg>
+        </div>
+      </div>
+    </div>
+
+  
+    <!-- Reset and Apply Buttons -->
+    <div class="flex flex-col space-y-3">
+      <button class="bg-blue-600 hover:bg-blue-700 focus:ring-2 focus:ring-blue-500 focus:ring-opacity-50 text-white w-full py-2 rounded-lg transition duration-150 ease-in-out font-medium" (click)="applyFilters()">
+        Apply Filters
+      </button>
+      <button class="border border-gray-300 hover:bg-gray-50 text-gray-700 w-full py-2 rounded-lg transition duration-150 ease-in-out font-medium" (click)="resetFilters()">
+        Reset Filters
+      </button>
+    </div>
+  
+    <!-- Applied Filters Tags -->
+    <div *ngIf="hasAppliedFilters()" class="mt-6 pt-4 border-t border-gray-200">
+      <h3 class="text-md font-medium text-gray-700 mb-2">Applied Filters</h3>
+      <div class="flex flex-wrap gap-2">
+        <div class="bg-blue-100 text-blue-800 px-3 py-1 rounded-full text-sm flex items-center">
+          Remote
+          <button class="ml-1 focus:outline-none" (click)="removeFilter('remote')">
+            <svg class="h-4 w-4" fill="currentColor" viewBox="0 0 20 20">
+              <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM8.707 7.293a1 1 0 00-1.414 1.414L8.586 10l-1.293 1.293a1 1 0 101.414 1.414L10 11.414l1.293 1.293a1 1 0 001.414-1.414L11.414 10l1.293-1.293a1 1 0 00-1.414-1.414L10 8.586 8.707 7.293z" clip-rule="evenodd"></path>
+            </svg>
+          </button>
+        </div>
+        <!-- Sample filter tags for demonstration -->
+        <div class="bg-blue-100 text-blue-800 px-3 py-1 rounded-full text-sm flex items-center">
+          Salary > ₹100,000
+          <button class="ml-1 focus:outline-none" (click)="removeFilter('salary')">
+            <svg class="h-4 w-4" fill="currentColor" viewBox="0 0 20 20">
+              <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM8.707 7.293a1 1 0 00-1.414 1.414L8.586 10l-1.293 1.293a1 1 0 101.414 1.414L10 11.414l1.293 1.293a1 1 0 001.414-1.414L11.414 10l1.293-1.293a1 1 0 00-1.414-1.414L10 8.586 8.707 7.293z" clip-rule="evenodd"></path>
+            </svg>
+          </button>
+        </div>
+        <div class="bg-blue-100 text-blue-800 px-3 py-1 rounded-full text-sm flex items-center">
+          JavaScript
+          <button class="ml-1 focus:outline-none" (click)="removeFilter('skill')">
+            <svg class="h-4 w-4" fill="currentColor" viewBox="0 0 20 20">
+              <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM8.707 7.293a1 1 0 00-1.414 1.414L8.586 10l-1.293 1.293a1 1 0 101.414 1.414L10 11.414l1.293 1.293a1 1 0 001.414-1.414L11.414 10l1.293-1.293a1 1 0 00-1.414-1.414L10 8.586 8.707 7.293z" clip-rule="evenodd"></path>
+            </svg>
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>

@@ -1,0 +1,79 @@
+<div class="relative min-h-screen flex flex-col items-center justify-center bg-blue-100 p-6">
+  <div class="absolute top-20 left-0 w-full">
+    <svg class="w-full h-auto scale-x-[-1]" viewBox="0 0 1200 320" xmlns="http://www.w3.org/2000/svg">
+      <path fill="#3b82f6" fill-opacity="1" d="M0,0L48,32C96,64,192,128,288,160C384,192,480,192,576,197.3C672,203,768,213,864,234.7C960,256,1056,288,1152,298.7C1248,309,1344,299,1392,293.3L1440,288L1440,320L0,320Z"></path>
+    </svg>
+  </div>
+<div class="absolute top-[-50px] left-[-50px] w-32 h-32 bg-blue-300 opacity-600 rounded-full blur-2xl"></div>
+<div class="absolute top-[30px] left-[10px] w-20 h-20 bg-blue-400 opacity-50 rounded-full blur-2xl"></div>
+<div class="absolute bottom-[-50px] right-[-50px] w-36 h-36 bg-blue-300 opacity-600 rounded-full blur-2xl"></div>
+<div class="absolute bottom-[20px] right-[20px] w-24 h-24 bg-blue-400 opacity-40 rounded-full blur-2xl"></div>
+  <div class="relative grid lg:grid-cols-2 items-center gap-6 max-w-6xl max-lg:max-w-lg w-full border border-gray-300 shadow-2xl rounded-lg p-12 bg-white z-10">
+    <form [formGroup]="signupForm" (ngSubmit)="onSubmit()" class="lg:max-w-md w-full">
+      <h3 class="text-gray-800 text-2xl font-bold mb-8">Create an account</h3>
+      <div class="space-y-6">
+        <div>
+          <label class="text-gray-800 text-sm mb-2 block">Username</label>
+          <input type="text" formControlName="username"
+            class="bg-gray-100 w-full text-gray-800 text-sm px-4 py-3 focus:bg-transparent border border-gray-100 focus:border-black outline-none transition-all"
+            placeholder="Enter name">
+          <small *ngIf="signupForm.get('username')?.invalid && signupForm.get('username')?.touched"
+            class="text-red-500">Username is required (min 4 characters).</small>
+        </div> 
+        <div>
+          <label class="text-gray-800 text-sm mb-2 block">Email</label>
+          <input type="email" formControlName="email"
+            class="bg-gray-100 w-full text-gray-800 text-sm px-4 py-3 focus:bg-transparent border border-gray-100 focus:border-black outline-none transition-all"
+            placeholder="Enter email">
+          <small *ngIf="signupForm.get('email')?.invalid && signupForm.get('email')?.touched"
+            class="text-red-500">Enter a valid email.</small>
+        </div>
+        <div>
+          <label class="text-gray-800 text-sm mb-2 block">Password</label>
+          <input type="password" formControlName="password"
+            class="bg-gray-100 w-full text-gray-800 text-sm px-4 py-3 focus:bg-transparent border border-gray-100 focus:border-black outline-none transition-all"
+            placeholder="Enter password">
+          <small *ngIf="signupForm.get('password')?.invalid && signupForm.get('password')?.touched"
+            class="text-red-500">Password must be at least 6 characters.</small>
+        </div> 
+        <div>
+          <label class="text-gray-800 text-sm mb-2 block">Confirm Password</label>
+          <input type="password" formControlName="rePassword"
+            class="bg-gray-100 w-full text-gray-800 text-sm px-4 py-3 focus:bg-transparent border border-gray-100 focus:border-black outline-none transition-all"
+            placeholder="Confirm password">
+          <small *ngIf="signupForm.get('rePassword')?.errors?.['required'] && signupForm.get('rePassword')?.touched"
+            class="text-red-500">Password confirmation is required.</small>
+          <small *ngIf="getPasswordMatchError()" class="text-red-500">Passwords do not match.</small>
+        </div>
+        <div>
+          <label class="text-gray-800 text-sm mb-2 block">Mobile</label>
+          <input type="text" formControlName="mobile"
+            class="bg-gray-100 w-full text-gray-800 text-sm px-4 py-3 focus:bg-transparent border border-gray-100 focus:border-black outline-none transition-all"
+            placeholder="Enter mobile number">
+          <small *ngIf="signupForm.get('mobile')?.invalid && signupForm.get('mobile')?.touched"
+            class="text-red-500">Enter a valid 10-digit mobile number.</small>
+        </div>
+        <div class="flex items-center">
+          <input id="remember-me" name="remember-me" type="checkbox" class="h-4 w-4 shrink-0 border-gray-300 rounded">
+          <label for="remember-me" class="ml-3 block text-sm text-gray-800">
+            I accept the <a href="javascript:void(0);" class="text-blue-600 font-semibold hover:underline ml-1">Terms and Conditions</a>
+          </label>
+        </div>
+      </div>
+      <div class="mt-6">
+        <button type="submit"
+          class="py-3 px-6 text-sm text-white tracking-wide bg-blue-600 hover:bg-blue-700 focus:outline-none w-full rounded-md"
+          [disabled]="signupForm.invalid">
+          Register
+        </button>
+      </div>
+      <p class="text-sm text-gray-800 mt-6">Already have an account? 
+        <a routerLink="/auth/signin" class="text-blue-600 font-semibold hover:underline ml-1">Login here</a>
+      </p>
+    </form>
+    <div class="h-full">
+      <img src="images/auth/signup-image.jpg" class="w-full h-full object-contain aspect-[628/516]"
+        alt="signup image">
+    </div>
+  </div>
+</div>

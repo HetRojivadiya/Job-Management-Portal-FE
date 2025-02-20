@@ -1,0 +1,27 @@
+<div *ngIf="isVerified" class="relative min-h-screen flex flex-col items-center justify-center p-6 bg-gradient-to-br from-blue-200 via-blue-300 to-blue-400 overflow-hidden">
+  <div class="absolute top-10 left-10 w-40 h-40 bg-blue-300 opacity-50 rounded-full blur-3xl"></div>
+  <div class="absolute top-32 right-20 w-24 h-24 bg-blue-400 opacity-40 rounded-full blur-2xl"></div>
+  <div class="absolute bottom-10 left-16 w-36 h-36 bg-blue-300 opacity-50 rounded-full blur-3xl"></div>
+  <div class="absolute bottom-20 right-10 w-28 h-28 bg-blue-400 opacity-30 rounded-full blur-2xl"></div>
+  <div class="relative bg-white border border-gray-300 shadow-2xl rounded-lg p-12 text-center max-w-lg">
+    <div class="flex items-center justify-center">
+      <div class="bg-green-500 p-4 rounded-full animate-bounce">
+        <svg viewBox="0 0 24 24" class="text-white w-12 h-12">
+          <path fill="currentColor"
+            d="M12,0A12,12,0,1,0,24,12,12.014,12.014,0,0,0,12,0Zm6.927,8.2-6.845,9.289a1.011,1.011,0,0,1-1.43.188L5.764,13.769a1,1,0,1,1,1.25-1.562l4.076,3.261,6.227-8.451A1,1,0,1,1,18.927,8.2Z">
+          </path>
+        </svg>
+      </div>
+    </div>
+    <h3 class="text-3xl font-bold text-gray-800 mt-6">Email Verified Successfully!</h3>
+    <p class="text-gray-600 mt-4">Thank you for verifying your email.</p>
+    <p class="text-gray-600">Redirecting to the login page in:</p>
+    <p class="text-5xl font-extrabold text-blue-600 mt-4 animate-pulse">{{ countdown }}</p>
+    <div class="mt-6">
+      <a routerLink="/auth/signin"
+        class="px-8 py-3 bg-blue-600 hover:bg-blue-700 text-white font-semibold rounded-lg transition-all shadow-md">
+        GO BACK NOW
+      </a>
+    </div>
+  </div>
+</div>

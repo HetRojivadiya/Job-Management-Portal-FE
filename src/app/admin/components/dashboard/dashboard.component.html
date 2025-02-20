@@ -1,0 +1,14 @@
+
+   <!-- userList -->
+   <app-user-list/>
+  
+   <div class="p-4">
+      <button (click)="isModalOpen = true" class="bg-blue-600 text-white px-4 py-2 rounded-md">
+        + Add New Job
+      </button>
+    </div>
+    
+    <app-job-create-modal *ngIf="isModalOpen" (closeModal)="isModalOpen = false" (jobCreated)="fetchJobs()" />
+    
+    <app-job-container #jobContainer/>
+   

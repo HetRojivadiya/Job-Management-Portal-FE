@@ -1,0 +1,11 @@
+<div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-8 p-6 bg-gray-200 rounded-lg ">    
+    <app-job-item
+      *ngFor="let job of jobs"
+      [job]="job"
+      [isAdmin]="isAdmin"
+      (edit)="editJob.emit($event)"
+      (delete)="deleteJob.emit($event)"
+      (apply)="applyJob.emit($event)">
+    </app-job-item>
+  </div>
+  

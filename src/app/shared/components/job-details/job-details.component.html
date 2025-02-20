@@ -1,0 +1,104 @@
+<div class="max-w-7xl mx-auto p-6 bg-gray-50">
+    <div class="flex gap-8">
+      <button (click)="goBack()" class="absolute top-6 left-6 w-24 px-4 py-2">
+        <img src="images/profile/back.png"/><p>Go Back</p>
+    </button>
+      <div class="flex-1 bg-white rounded-xl shadow-sm p-6">
+        <div class="flex items-start justify-between mb-6">
+          <div class="flex items-start gap-4">
+            <div class="w-14 h-14 bg-blue-600 flex items-center justify-center text-white rounded-xl shadow-sm">
+           <span class="text-xl font-semibold">{{ jobDetails?.title?.charAt(0) }}</span>
+            </div>
+            <div>
+              <h1 class="text-2xl font-bold mb-2 text-gray-800">{{jobDetails?.title}}</h1>
+              <div class="flex items-center gap-2 text-gray-600">
+                <span class="text-blue-600 font-medium hover:text-blue-700 cursor-pointer">Pixelz Studio</span>
+                <span>•</span>
+                <span class="flex items-center gap-1">
+                  <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
+                  </svg>
+                 Ahemdabad
+                </span>
+              </div>
+            </div>
+          </div>
+          <div class="flex gap-3">
+            <button class="bg-blue-600 text-white px-6 py-2.5 rounded-lg font-medium hover:bg-blue-700 transition-colors shadow-sm">
+              Apply Now
+            </button>
+            <button class="p-2.5 border rounded-lg hover:bg-gray-50 transition-colors text-gray-400 hover:text-yellow-500">
+              <svg class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 5a2 2 0 012-2h10a2 2 0 012 2v16l-7-3.5L5 21V5z" />
+              </svg>
+            </button>
+            <button class="p-2.5 border rounded-lg hover:bg-gray-50 transition-colors">
+              <svg class="w-5 h-5 text-gray-600" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8.684 13.342C8.886 12.938 9 12.482 9 12c0-.482-.114-.938-.316-1.342m0 2.684a3 3 0 110-2.684m0 2.684l6.632 3.316m-6.632-6l6.632-3.316m0 0a3 3 0 105.367-2.684 3 3 0 00-5.367 2.684zm0 9.316a3 3 0 105.368 2.684 3 3 0 00-5.368-2.684z" />
+              </svg>
+            </button>
+          </div>
+        </div>
+        <div class="flex gap-6 mb-8 border-b pb-6">
+          <div class="flex items-center gap-2 text-gray-600">
+            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 13.255A23.931 23.931 0 0112 15c-3.183 0-6.22-.62-9-1.745M16 6V4a2 2 0 00-2-2h-4a2 2 0 00-2 2v2m4 6h.01M5 20h14a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
+            </svg>
+            Fulltime
+          </div>
+          <div class="flex items-center gap-2 text-gray-600">
+            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.75 17L9 20l-1 1h8l-1-1-.75-3M3 13h18M5 17h14a2 2 0 002-2V5a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
+            </svg>
+            {{jobDetails?.location}}
+          </div>
+          <div class="flex items-center gap-2 text-gray-600">
+            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
+            </svg>
+            {{jobDetails?.experience_level}} Years
+          </div>
+        </div>
+        <div class="space-y-8">
+          <section>
+            <h2 class="text-lg font-semibold mb-3 text-gray-800">About this role</h2>
+            <p class="text-gray-600 leading-relaxed">
+              {{jobDetails?.description}}
+            </p>
+          </section>
+          <section>
+            <h2 class="text-lg font-semibold mb-3 text-gray-800">Qualification</h2>
+            <ul class="list-disc pl-5 text-gray-600 space-y-2.5">
+              <li>Bachelor’s or Master’s degree in Computer Science, IT, or a related field.</li>
+              <li>At least 2-5 years of experience in software development or engineering.</li>
+              <li>Proficiency in programming languages like JavaScript, TypeScript, Python, Java, or C#.</li>
+              <li>Experience with modern frameworks such as Angular, React, Vue.js, or NestJS.</li>
+              <li>Strong understanding of databases (SQL, NoSQL) and ORM tools.</li>
+              <li>Familiarity with cloud platforms such as AWS, Azure, or Google Cloud.</li>
+              <li>Experience with version control tools like Git and CI/CD pipelines.</li>
+              <li>Ability to work in an Agile/Scrum environment and collaborate with cross-functional teams.</li>
+            </ul>
+          </section>
+          <section>
+            <h2 class="text-lg font-semibold mb-3 text-gray-800">Responsibility</h2>
+            <ul class="list-disc pl-5 text-gray-600 space-y-2.5">
+              <li>Develop, test, and maintain scalable, high-performance software applications.</li>
+              <li>Collaborate with designers, product managers, and backend engineers to deliver feature-rich solutions.</li>
+              <li>Write clean, maintainable, and efficient code following industry best practices.</li>
+              <li>Debug and optimize applications for maximum performance and security.</li>
+              <li>Ensure seamless integration of third-party services and APIs.</li>
+              <li>Participate in code reviews and provide feedback to improve code quality.</li>
+              <li>Stay updated with emerging technologies and contribute to continuous learning within the team.</li>
+            </ul>
+          </section>
+        </div>
+      </div>
+      <div class="w-90 shrink-0">
+        <h2 class="text-lg font-semibold mb-4">Similar Jobs</h2>
+        <div class="max-h-[800px] overflow-y-auto pr-2">
+        <app-recommanded-jobs/>
+      </div>
+    </div>
+  </div>
+</div>

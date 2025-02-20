@@ -1,0 +1,65 @@
+<div class="relative min-h-screen flex flex-col items-center justify-center p-6 bg-blue-100 overflow-hidden">
+  <div class="absolute top-20 left-0 w-full">
+    <svg class="w-full h-auto" viewBox="0 0 1250 320" xmlns="http://www.w3.org/2000/svg">
+      <path fill="#3b82f6" fill-opacity="1" d="M0,0L48,32C96,64,192,128,288,160C384,192,480,192,576,197.3C672,203,768,213,864,234.7C960,256,1056,288,1152,298.7C1248,309,1344,299,1392,293.3L1440,288L1440,320L0,320Z"></path>
+    </svg>
+  </div>
+<div class="absolute top-[-50px] right-[-50px] w-32 h-32 bg-blue-300 opacity-600 rounded-full blur-2xl"></div>
+<div class="absolute top-[30px] right-[10px] w-20 h-20 bg-blue-400 opacity-50 rounded-full blur-2xl"></div>
+<div class="absolute bottom-[-50px] left-[-50px] w-36 h-36 bg-blue-300 opacity-600 rounded-full blur-2xl"></div>
+<div class="absolute bottom-[20px] left-[20px] w-24 h-24 bg-blue-400 opacity-40 rounded-full blur-2xl"></div>
+  <div class="relative z-10 grid lg:grid-cols-2 items-center gap-6 max-w-6xl max-lg:max-w-lg w-full border border-gray-300 shadow-2xl rounded-lg p-12 bg-white">
+    <form [formGroup]="signinForm" (ngSubmit)="onSubmit()" class="lg:max-w-md w-full">
+      <h3 class="text-gray-800 text-2xl font-bold mb-8">Sign in to your account</h3>
+      <div class="space-y-6">
+        <div>
+          <label class="text-gray-800 text-sm mb-2 block">Email</label>
+          <input type="email" formControlName="email"
+            class="bg-gray-100 w-full text-gray-800 text-sm px-4 py-3 focus:bg-transparent border border-gray-100 focus:border-black outline-none transition-all"
+            placeholder="Enter email">
+          <small *ngIf="signinForm.get('email')?.invalid && signinForm.get('email')?.touched"
+            class="text-red-500">Enter a valid email.</small>
+        </div>
+        <div>
+          <label class="text-gray-800 text-sm mb-2 block">Password</label>
+          <input type="password" formControlName="password"
+            class="bg-gray-100 w-full text-gray-800 text-sm px-4 py-3 focus:bg-transparent border border-gray-100 focus:border-black outline-none transition-all"
+            placeholder="Enter password">
+          <small *ngIf="signinForm.get('password')?.invalid && signinForm.get('password')?.touched"
+            class="text-red-500">Password must be at least 6 characters.</small>
+        </div>
+      </div>
+      <div class="mt-6">
+        <button type="submit"
+          class="py-3 px-6 text-sm text-white tracking-wide bg-blue-600 hover:bg-blue-700 focus:outline-none w-full rounded-md"
+          [disabled]="signinForm.invalid">
+          Sign In
+        </button>
+      </div>
+      <p class="text-sm text-gray-800 mt-6">Don't have an account? 
+        <a routerLink="/auth/signup" class="text-blue-600 font-semibold hover:underline ml-1">Sign up here</a>
+      </p>
+    </form>
+    <div class="h-full">
+        <img src="images/auth/signin-image.jpg" class="w-full h-full object-contain aspect-[628/516]" alt="signin image">
+    </div>
+  </div>
+</div>
+<div *ngIf="showPopup" class="fixed inset-0 flex items-center justify-center bg-black/50 z-50">
+  <div class="bg-white p-8 rounded-lg shadow-2xl text-center w-[500px] md:w-[600px] lg:w-[700px] h-[620px] relative">
+    <button (click)="showPopup = false" class="absolute top-4 right-4 text-gray-500 hover:text-gray-800 text-xl">
+      ✖
+    </button>
+    <div class="flex justify-center">
+      <img src="/images/auth/2fa.jpg" alt="Security" class="w-60 h-60 object-cover">
+    </div>
+    <h3 class="text-2xl font-bold text-gray-800 mt-6">Security Options</h3>
+    <p class="text-gray-600 mt-3 text-lg">How would you like to proceed?</p>
+    <div class="mt-8 space-y-4">
+      <button (click)="enable2FA()" class="w-full py-3 bg-blue-600 text-white rounded-md text-lg hover:bg-blue-700">Enable 2FA</button>
+      <button (click)="disable2FA()" class="w-full py-3 bg-red-600 text-white rounded-md text-lg hover:bg-red-700">Disable 2FA</button>
+      <button (click)="remindMeLater()" class="w-full py-3 bg-gray-300 text-gray-800 rounded-md text-lg hover:bg-gray-400">Remind Me Later</button>
+    </div>
+  </div>
+</div>
+
