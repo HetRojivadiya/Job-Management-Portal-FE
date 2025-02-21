@@ -1,4 +1,3 @@
-
     <div class="h-full bg-gray-200 p-8">
         <section class="relative pt-40 pb-24 bg-white">
             <img src="https://pagedone.io/asset/uploads/1705473378.png" alt="cover-image" class="w-full absolute top-0 left-0 z-0 h-60 object-cover">
@@ -29,9 +28,9 @@
                 </div>
                 <div class="flex flex-col lg:flex-row max-lg:gap-5 items-center justify-between py-0.5">
                     <div class="flex items-center gap-4">
-                        <button (click)="openSkillModal()"
+                        <button *ngIf="isCandidate" (click)="openSkillModal()"
                             class="py-3.5 px-5 rounded-full bg-indigo-600 text-white font-semibold text-base leading-7 shadow-sm shadow-transparent transition-all duration-500 hover:shadow-gray-100 hover:bg-indigo-700">Add Skills</button>
-                        <button (click)="toggleDeleteSkillMode()"
+                        <button *ngIf="isCandidate" (click)="toggleDeleteSkillMode()"
                             class="py-3.5 px-5 rounded-full bg-indigo-50 text-red-500 font-semibold text-base leading-7 shadow-sm shadow-transparent transition-all duration-500 hover:bg-indigo-100">Delete Skill</button>
                     </div>
                     <div class="flex flex-col md:flex-row items-center gap-6 ">
@@ -42,22 +41,32 @@
                                     stroke="#9CA3AF" stroke-width="1.6" />
                             </svg>
                         </p>
-                        <ul class="flex items-center max-sm:justify-center max-sm:flex-wrap gap-2.5">
+                        <ul class="flex flex-wrap items-center gap-3 p-4 max-w-3xl">
                             <ng-container *ngIf="userProfile.skills?.length; else noSkills">
-                                <li *ngFor="let skill of userProfile.skills" [attr.data-id]="skill.userSkillId"
-                                class="py-2 px-4 rounded-full bg-orange-50 font-semibold text-base leading-7 text-gray-700">
-                              {{ skill.skillName }} ({{ skill.proficiencyLevel }})
-                              <button *ngIf="isDeletingSkill" (click)="deleteSkill(skill.userSkillId ?? '')"
-                                    class="ml-2 px-2 py-1 text-red-600 hover:text-red-800 transition">
-                                    ❌
+                              <li *ngFor="let skill of userProfile.skills" [attr.data-id]="skill.userSkillId"
+                                class="flex items-center py-2 px-4 rounded-full bg-gradient-to-r from-amber-50 to-orange-100 shadow-sm hover:shadow-md transition-all duration-200 border border-amber-200">
+                                <span class="font-medium text-gray-800">{{ skill.skillName }}</span>
+                                <span class="ml-1.5 px-2 py-0.5 bg-white bg-opacity-60 rounded-full text-xs font-semibold text-amber-700">
+                                  {{ skill.proficiencyLevel }}
+                                </span>
+                                <button *ngIf="isDeletingSkill" (click)="deleteSkill(skill.userSkillId ?? '')"
+                                  class="ml-2 text-red-500 hover:text-red-700 focus:outline-none transition-colors duration-200">
+                                  <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" viewBox="0 0 20 20" fill="currentColor">
+                                    <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM8.707 7.293a1 1 0 00-1.414 1.414L8.586 10l-1.293 1.293a1 1 0 101.414 1.414L10 11.414l1.293 1.293a1 1 0 001.414-1.414L11.414 10l1.293-1.293a1 1 0 00-1.414-1.414L10 8.586 8.707 7.293z" clip-rule="evenodd" />
+                                  </svg>
                                 </button>
-                            </li>
-                            
+                              </li>
                             </ng-container>
                             <ng-template #noSkills>
-                                <span class="text-gray-500 text-l">No Skills</span>
+                              <div class="w-full py-6 flex flex-col items-center text-gray-500">
+                                <svg xmlns="http://www.w3.org/2000/svg" class="h-12 w-12 mb-2 text-gray-300" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z" />
+                                </svg>
+                                <span class="text-lg font-medium">No skills added yet</span>
+                                <p class="text-sm mt-1">Add skills to showcase your expertise</p>
+                              </div>
                             </ng-template>
-                        </ul>
+                          </ul>
                     </div>
                 </div>
             </div>
@@ -108,24 +117,17 @@
                         </li>
                     </ul>
                 </div>
-               
-                <app-resume *ngIf="userProfile.userId" [userId]="userProfile.userId"></app-resume>
-      
-                
-                
+                <app-resume *ngIf="userProfile.userId" [isCandidate]="isCandidate" [userId]="userProfile.userId"></app-resume>
             </div>
             <div class="flex flex-col w-full 2xl:w-2/3">
-                
-                <app-applied-jobs *ngIf="userProfile.userId" [userId]="userProfile.userId"></app-applied-jobs>
-
+                <app-applied-jobs *ngIf="userProfile.userId" [isCandidate]="isCandidate" [userId]="userProfile.userId"></app-applied-jobs>
             </div>
         </div>
     </div>
 
 
-
 <!-- Multi-Skill Modal -->
-<app-add-skill-modal 
+<app-add-skill-modal *ngIf="isCandidate"
   [showSkillModal]="showSkillModal" 
   (closeModal)="closeSkillModal()" 
   (skillsUpdated)="refreshSkills()">

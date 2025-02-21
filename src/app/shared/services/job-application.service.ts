@@ -3,30 +3,26 @@ import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { ApiService } from '../../core/services/api.service';
 import { AppliedJobsResponse } from '../model/job.model'; 
+import { API_ENDPOINTS } from '../constants/api-endpoints.constants';
 
 @Injectable({
   providedIn: 'root'
 })
 export class JobApplicationService {
-  private apiUrl = '/job-application/apply';
-  private appliedUrl = '/job-application/applied'; 
-  private deleteAppliedUrl = '/job-application';
-
   constructor(private http: HttpClient,private apiService:ApiService) {}
-
 
   appyliedJobs(jobId : string)
   {
-     return this.apiService.get<AppliedJobsResponse>(`${this.appliedUrl}/${jobId}`);
+     return this.apiService.get<AppliedJobsResponse>(`${API_ENDPOINTS.APPLIED_URL}/${jobId}`);
   }
 
   applyForJob(formData: FormData)
   {
-    return this.apiService.post<FormData>(this.apiUrl, formData);
+    return this.apiService.post<FormData>(API_ENDPOINTS.APPLY_URL, formData);
   }
 
   deleteJobApplication(applicationId: string): Observable<any> {
-    return this.apiService.delete(`${this.deleteAppliedUrl}/${applicationId}`);
+    return this.apiService.delete(`${API_ENDPOINTS.DELETED_APPLIED_URL}/${applicationId}`);
   }
   
 }

@@ -4,6 +4,7 @@ import { UserService } from '../../services/user.service';
 import { UserProfile } from '../../model/user-profile.model';
 import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
 import { Location } from '@angular/common';
+import { RoleService } from '../../../core/services/role.service';
 
 @Component({
   selector: 'app-profile',
@@ -16,23 +17,33 @@ export class ProfileComponent implements OnInit {
   resumeUrl: SafeResourceUrl | null = null;
   showSkillModal: boolean = false;
   isDeletingSkill: boolean = false;
+  isCandidate: boolean = false;
  
   newSkills: { skillName: string; proficiencyLevel: number }[] = [
     { skillName: '', proficiencyLevel: 1 },
   ];
+  
 
   constructor(
     private userService: UserService,
     private route: ActivatedRoute,
     private sanitizer: DomSanitizer,
-    private location: Location
+    private location: Location,
+     private roleService: RoleService,
   ) {}
 
   ngOnInit(): void {
+    this.checkAdminStatus();
     const userId= this.route.snapshot.paramMap.get('id');
     if (userId) {
       this.fetchUserProfile(userId);
     }
+  }
+
+  async checkAdminStatus(): Promise<void> {
+    const role = await this.roleService.getRole();
+    this.isCandidate = role === 'Candidate';
+    
   }
 
   fetchUserProfile(userId: string): void {
@@ -80,7 +91,9 @@ export class ProfileComponent implements OnInit {
           this.userProfile.skills!.splice(index, 1);
         }
       },
-      error: (err) => console.error('Error deleting skill:', err),
+      error: (err) => {
+        throw new Error(err);
+      }
     });
   }
 

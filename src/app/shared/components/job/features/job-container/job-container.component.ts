@@ -18,7 +18,8 @@ export class JobContainerComponent implements OnInit {
   isDeleteModalOpen: boolean = false;
   jobToDelete: string | null = null;
   isApplyModalOpen: boolean = false;
-selectedJobId: string | null = null;  
+  selectedJobId: string | null = null; 
+  Admin : string ='Admin';
 
   constructor(private jobService: JobService, private roleService: RoleService,private jobApplicationService : JobApplicationService) {}
 
@@ -33,14 +34,14 @@ selectedJobId: string | null = null;
         this.jobs = data;
       },
       error: (err) => {
-        console.error('Error fetching jobs:', err);
+        console.error(err);
       },
     });
   }
 
   async checkAdminStatus(): Promise<void> {
     const role = await this.roleService.getRole();
-    this.isAdmin = role === 'Admin';
+    this.isAdmin = role === this.Admin;
   }
 
   openEditModal(job: Job): void {
@@ -75,7 +76,7 @@ selectedJobId: string | null = null;
           this.closeDeleteModal();
         },
         error: (err) => {
-          console.error('Error deleting job:', err);
+          console.error(err);
         },
       });
     }

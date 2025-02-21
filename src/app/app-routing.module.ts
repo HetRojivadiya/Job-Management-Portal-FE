@@ -7,18 +7,19 @@ import { UnauthorizedComponent } from './shared/components/common/unauthorized/u
 import { NotFoundComponent } from './shared/components/common/not-found/not-found.component';
 import { ProfileComponent } from './shared/components/profile/profile.component';
 import { JobDetailsComponent } from './shared/components/job-details/job-details.component';
+import { ROUTING } from './shared/constants/routes';
 
 
 
 const routes: Routes = [
   { path: '', redirectTo: 'auth/signin', pathMatch: 'full' },
-  { path: 'auth', canActivate: [loggedInGuard], loadChildren: () => import('./auth/auth.module').then(m => m.AuthModule)},
-  { path: 'candidate', canActivate: [authGuard],canMatch: [roleGuard], data: { role: 'Candidate' } , loadChildren: () => import('./candidate/candidate.module').then(m => m.CandidateModule)},
-  { path: 'admin', canActivate: [authGuard],canMatch: [roleGuard], data: { role: 'Admin' } ,loadChildren: () => import('./admin/admin.module').then(m => m.AdminModule)},
-  { path: 'unauthorized', component: UnauthorizedComponent },
-  { path: 'notfound', component: NotFoundComponent },
-  { path: 'profile/:id', component: ProfileComponent },
-  { path: 'job-details/:id', component: JobDetailsComponent },
+  { path: ROUTING.AUTH, canActivate: [loggedInGuard], loadChildren: () => import('./auth/auth.module').then(m => m.AuthModule)},
+  { path: ROUTING.CANDIDATE, canActivate: [authGuard],canMatch: [roleGuard], data: { role: 'Candidate' } , loadChildren: () => import('./candidate/candidate.module').then(m => m.CandidateModule)},
+  { path: ROUTING.ADMIN, canActivate: [authGuard],canMatch: [roleGuard], data: { role: 'Admin' } ,loadChildren: () => import('./admin/admin.module').then(m => m.AdminModule)},
+  { path: ROUTING.UNAUTHORIZED, component: UnauthorizedComponent },
+  { path: ROUTING.NOT_FOUND, component: NotFoundComponent },
+  { path: ROUTING.PROFILE, component: ProfileComponent },
+  { path: ROUTING.JOB_DETAILS, component: JobDetailsComponent },
   { path: '**', redirectTo: 'notfound' } ,
   
 ];

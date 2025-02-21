@@ -31,8 +31,4 @@ export class JobItemComponent {
     this.apply.emit(this.job.id);
   }
 
-
-
-  
-  
 }

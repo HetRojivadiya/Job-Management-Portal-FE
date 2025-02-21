@@ -2,38 +2,37 @@ import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { ApiService } from '../../core/services/api.service';
 import { Job } from '../model/job.model';
+import { API_ENDPOINTS } from '../constants/api-endpoints.constants';
 
 @Injectable({
   providedIn: 'root',
 })
 export class JobService {
-  private readonly jobUrl = '/jobs';
-  private readonly getRecommendedJobsUrl = '/jobs/recommended';
 
   constructor(private apiService: ApiService) {}
 
   getJobs(): Observable<Job[]> {
-    return this.apiService.get<Job[]>(this.jobUrl);
+    return this.apiService.get<Job[]>(API_ENDPOINTS.JOBS_URL);
   }
 
   updateJob(jobId: string, jobData: Partial<Job>): Observable<Job> {
-    return this.apiService.put<Job>(`${this.jobUrl}/${jobId}`, jobData);
+    return this.apiService.put<Job>(`${API_ENDPOINTS.JOBS_URL}/${jobId}`, jobData);
   }
 
   deleteJob(jobId: string): Observable<void> {
-    return this.apiService.delete<void>(`${this.jobUrl}/${jobId}`);
+    return this.apiService.delete<void>(`${API_ENDPOINTS.JOBS_URL}/${jobId}`);
   }
 
   createJob(jobData: any): Observable<any> {
-    return this.apiService.post<any>(this.jobUrl, jobData);
+    return this.apiService.post<any>(API_ENDPOINTS.JOBS_URL, jobData);
   }
 
   fetchJobDetails(jobId: string): Observable<Job> {
-    return this.apiService.get<Job>(`${this.jobUrl}/${jobId}`);
+    return this.apiService.get<Job>(`${API_ENDPOINTS.JOBS_URL}/${jobId}`);
   }
 
   getRecommendedJobs(): Observable<Job[]> {
-    return this.apiService.get<Job[]>(this.getRecommendedJobsUrl);
+    return this.apiService.get<Job[]>(API_ENDPOINTS.GET_RECOMMENDED_JOB_URL);
   }
   
 }

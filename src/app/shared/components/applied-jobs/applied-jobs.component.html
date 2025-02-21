@@ -146,9 +146,12 @@
           <button (click)="closeJobDetails()" class="px-4 py-2 bg-gray-200 hover:bg-gray-300 text-gray-700 text-sm font-medium rounded-lg transition duration-200">
             Back to List
           </button>
-           <button (click)="deleteAppliedJob(selectedJob.applicationId)" class="px-4 py-2 bg-red-600 hover:bg-red-700 text-white text-sm font-medium rounded-lg transition duration-200">
+           <button *ngIf="isCandidate" (click)="deleteAppliedJob(selectedJob.applicationId)" class="px-4 py-2 bg-red-600 hover:bg-red-700 text-white text-sm font-medium rounded-lg transition duration-200">
             Cancel Application
-      </button>
+          </button>
+           <button *ngIf="!isCandidate"  class="px-4 py-2 bg-yellow-500 hover:bg-yello-700 text-white text-sm font-medium rounded-lg transition duration-200">
+            Update Application Status
+          </button>
           <button class="px-6 py-2 bg-blue-600 hover:bg-blue-700 text-white text-sm font-medium rounded-lg transition duration-200">
             Contact Recruiter
           </button>

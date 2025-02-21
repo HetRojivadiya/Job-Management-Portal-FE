@@ -10,6 +10,7 @@ import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
 })
 export class ResumeComponent implements OnInit {
   @Input() userId!: string;
+  @Input() isCandidate! : boolean;
   @ViewChild('fileInput') fileInput!: ElementRef;
   
   resumeUrl: SafeResourceUrl | null = null;

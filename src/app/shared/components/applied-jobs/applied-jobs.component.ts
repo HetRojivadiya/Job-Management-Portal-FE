@@ -10,6 +10,7 @@ import { Job } from '../../model/job.model';
 })
 export class AppliedJobsComponent implements OnInit {
   @Input() userId!: string;
+  @Input() isCandidate!: boolean;
   appliedJobs: Job[] = [] ; 
   selectedJob: any = null;
 
