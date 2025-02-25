@@ -5,6 +5,9 @@ import { UserProfile } from '../../model/user-profile.model';
 import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
 import { Location } from '@angular/common';
 import { RoleService } from '../../../core/services/role.service';
+import { API_ENDPOINTS } from '../../constants/api-endpoints.constants';
+import { CONDITION } from '../../constants/conditional.constants';
+import { take } from 'rxjs';
 
 @Component({
   selector: 'app-profile',
@@ -23,7 +26,6 @@ export class ProfileComponent implements OnInit {
     { skillName: '', proficiencyLevel: 1 },
   ];
   
-
   constructor(
     private userService: UserService,
     private route: ActivatedRoute,
@@ -42,18 +44,18 @@ export class ProfileComponent implements OnInit {
 
   async checkAdminStatus(): Promise<void> {
     const role = await this.roleService.getRole();
-    this.isCandidate = role === 'Candidate';
+    this.isCandidate = role === CONDITION.CANDIDATE;
     
   }
 
   fetchUserProfile(userId: string): void {
-    this.userService.getUserProfile(userId).subscribe({
+    this.userService.getUserProfile(userId).pipe(take(1)).subscribe({
       next: (response) => {
         this.userProfile = response.data || ({} as UserProfile);
         this.userProfile.skills = this.userProfile.skills || [];
         if (this.userProfile?.resume?.system_path) {
           this.resumeUrl = this.sanitizer.bypassSecurityTrustResourceUrl(
-            'http://localhost:4000/uploads/resumes/' +
+            API_ENDPOINTS.GET_RESUME_LINK +
               this.userProfile.resume.system_path.split('/').pop()
           );
         }
@@ -84,7 +86,7 @@ export class ProfileComponent implements OnInit {
   deleteSkill(skillId: string): void {
     if (!this.userProfile.skills) return; 
   
-    this.userService.deleteSkill(skillId).subscribe({
+    this.userService.deleteSkill(skillId).pipe(take(1)).subscribe({
       next: () => {
         const index = this.userProfile.skills!.findIndex(skill => skill.userSkillId === skillId);
         if (index !== -1) {

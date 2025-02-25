@@ -10,6 +10,8 @@ import { LoggerService } from '../../../core/services/logger.service';
 import { RoleService } from '../../../core/services/role.service';
 import { TokenService } from '../../../core/services/token.service';
 import { UserIdService } from '../../../core/services/userId.service';
+import { SigninData, SigninResponse } from '../../models/user.model';
+import { take } from 'rxjs';
 
 @Component({
   selector: 'app-signin',
@@ -49,10 +51,9 @@ export class SigninComponent {
     }
 
     const signinData = this.signinForm.value;
-    this.authService.signin(signinData).subscribe({
+    this.authService.signin(signinData).pipe(take(1)).subscribe({
       next: (res) => {
         if (res.statusCode === 200) {
-          console.log(MESSAGES.REDIRECT_TO_OTP_PAGE);
           this.handleLoginSuccess(res.data);
         }
       },
@@ -65,7 +66,7 @@ export class SigninComponent {
     });
   }
 
-  private handleLoginSuccess(data: any): void {
+  private handleLoginSuccess(data :SigninData): void {
     this.roleService.setRole(data.role);
     this.tokenService.setToken(data.token);
     this.userIdService.refreshUserData(); 
@@ -83,7 +84,7 @@ export class SigninComponent {
   }
 
   enable2FA(): void {
-    this.authService.enable2FA().subscribe({
+    this.authService.enable2FA().pipe(take(1)).subscribe({
       next: (res) => {
         localStorage.setItem('qrCode', res.qrCode);
         localStorage.setItem('enable2FAMessage', res.message);
@@ -99,7 +100,7 @@ export class SigninComponent {
   }
 
   disable2FA(): void {
-    this.authService.disable2FA().subscribe({
+    this.authService.disable2FA().pipe(take(1)).subscribe({
       next: () => {
         this.toastr.success(MESSAGES.DISABLE_2FA_SUCCESSFUL);
         this.tokenService.setToken(this.token);

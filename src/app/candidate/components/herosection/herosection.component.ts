@@ -19,7 +19,6 @@ export class HerosectionComponent {
     decoration2: 'images/hero/decoration-02.svg',
     decoration3: 'images/hero/decoration-03.svg'
   };
-
   ngOnInit(): void {}
 
 }

@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { JobService } from '../../services/job.service';
 import { Job } from '../../model/job.model';
+import { Colors } from '../../enums/colors.enum';
+import { take } from 'rxjs';
 
 @Component({
   selector: 'app-recommanded-jobs',
@@ -10,7 +12,7 @@ import { Job } from '../../model/job.model';
 })
 export class RecommandedJobsComponent implements OnInit {
   recommendedJobs: Job[] = [];
-  colors: string[] = ['bg-red-500', 'bg-blue-500', 'bg-green-500', 'bg-yellow-500', 'bg-purple-500', 'bg-indigo-500'];
+  colors: string[] = Object.values(Colors);
 
   constructor(private jobService: JobService) {}
 
@@ -19,14 +21,14 @@ export class RecommandedJobsComponent implements OnInit {
   }
 
   fetchRecommendedJobs(): void {
-    this.jobService.getRecommendedJobs().subscribe(
+    this.jobService.getRecommendedJobs().pipe(take(1)).subscribe(
       (jobs) => {
         this.recommendedJobs = jobs.map((job, index) => ({
           ...job,
           colorClass: this.colors[index % this.colors.length]
         }));},
       (error) => {
-        console.error('Error fetching recommended jobs:', error);
+        throw error;
       }
     );
   }

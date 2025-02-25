@@ -31,7 +31,6 @@ export class UserIdService {
     }
   }
 
-
   getId(): string | null {
     return this.userId;
   }

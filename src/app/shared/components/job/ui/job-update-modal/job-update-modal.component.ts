@@ -2,6 +2,8 @@ import { Component, Input, Output, EventEmitter, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { JobService } from '../../../../services/job.service';
 import { Job } from '../../../../model/job.model';
+import { JobSkill } from '../../../../enums/job-skills.enum';
+import { take } from 'rxjs';
 
 @Component({
   selector: 'app-job-update-modal',
@@ -17,12 +19,7 @@ export class JobUpdateModalComponent implements OnInit {
   jobForm!: FormGroup;
   isDropdownOpen: boolean = false;
 
-  availableSkills: string[] = [
-    'Java', 'Spring Boot', 'Angular', 'React', 'Node.js',
-    'Python', 'Django', 'Flask', 'C#', '.NET',
-    'SQL', 'MongoDB', 'GraphQL', 'Docker', 'Kubernetes',
-    'AWS', 'Azure', 'Firebase', 'Flutter', 'Swift'
-  ];
+  availableSkills: string[] = Object.values(JobSkill);
 
   selectedSkills: string[] = [];
 
@@ -73,7 +70,7 @@ export class JobUpdateModalComponent implements OnInit {
   updateJob(): void {
     if (this.job && this.jobForm.valid) {
       const updatedJob = { ...this.job, ...this.jobForm.value };
-      this.jobService.updateJob(this.job.id, updatedJob).subscribe(() => {
+      this.jobService.updateJob(this.job.id, updatedJob).pipe(take(1)).subscribe(() => {
         this.jobUpdated.emit();
         this.closeModal.emit();
       });

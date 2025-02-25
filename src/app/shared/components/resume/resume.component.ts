@@ -1,6 +1,11 @@
 import { Component, Input, OnInit, ViewChild, ElementRef } from '@angular/core';
 import { UserService } from '../../services/user.service';
 import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
+import { API_ENDPOINTS } from '../../constants/api-endpoints.constants';
+import { MESSAGES } from '../../constants/message.constants';
+import { ModalType } from '../../enums/modal-type.enum';
+import { ProfileResponse, UserProfile } from '../../model/user-profile.model';
+import { take } from 'rxjs';
 
 @Component({
   selector: 'app-resume',
@@ -12,46 +17,51 @@ export class ResumeComponent implements OnInit {
   @Input() userId!: string;
   @Input() isCandidate! : boolean;
   @ViewChild('fileInput') fileInput!: ElementRef;
-  
   resumeUrl: SafeResourceUrl | null = null;
   selectedResume: File | null = null;
   resumeName: string | null = null;
   resumePath: string | null = null;
+  modalType: string | null = null;
   isHovering = false;
   isUploading = false;
   uploadProgress = 0;
   confirmDelete = false;
   showConfirmation = false;
   modalMessage = '';
-  modalType: 'success' | 'error' | 'warning' = 'success';
   showModal = false;
+  selectedResumeSize : string | null = null;
+  userProfile: UserProfile = {} as UserProfile;
 
   constructor(private userService: UserService, private sanitizer: DomSanitizer) {}
-
   ngOnInit(): void {
     if (this.userId) {
       this.fetchResume();
     }
   }
-
   fetchResume(): void {
-    this.userService.getUserProfile(this.userId).subscribe({
-      next: (response) => {
-        this.resumePath = response.data?.resume?.system_path;
+    this.userService.getUserProfile(this.userId).pipe(take(1)).subscribe({
+      next: (response : ProfileResponse) => {
+        this.userProfile = response.data || ({} as UserProfile);
+        this.resumePath = this.userProfile?.resume?.system_path || '';
         if (this.resumePath) {
           this.resumeUrl = this.sanitizer.bypassSecurityTrustResourceUrl(
-            `http://localhost:4000/uploads/resumes/${this.resumePath.split('/').pop()}`
+            `${API_ENDPOINTS.GET_RESUME_LINK}${this.resumePath.split('/').pop()}`
           );
-          this.resumeName = response.data?.resume?.name;
+          this.resumeName = response.data?.resume?.name || '';
         }
       },
-      error: (err) => console.error('Error fetching resume:', err),
+      error: (err) => {
+          throw err;
+      }
     });
   }
 
   onFileSelected(event: any): void {
     if (event.target.files.length > 0) {
       this.selectedResume = event.target.files[0];
+      this.selectedResumeSize = this.selectedResume?.size 
+      ? this.formatFileSize(this.selectedResume.size) 
+      : null;
       this.uploadProgress = 0;
     }
   }
@@ -62,35 +72,30 @@ export class ResumeComponent implements OnInit {
 
   uploadResume(): void {
     if (!this.selectedResume) {
-      this.modalMessage = 'Please select a resume file before uploading.';
-      this.modalType = 'warning';
+      this.modalMessage = MESSAGES.SELECT_FILE;
+      this.modalType = ModalType.Warning;
       this.showModal = true;
       return;
     }
-
     this.isUploading = true;
     this.simulateProgress();
-
     const formData = new FormData();
     formData.append('resume', this.selectedResume);
-
-    this.userService.uploadResume(formData).subscribe({
+    this.userService.uploadResume(formData).pipe(take(1)).subscribe({
       next: () => {
         this.isUploading = false;
         this.uploadProgress = 100;
-        this.modalMessage = 'Resume uploaded successfully!';
-        this.modalType = 'success';
+        this.modalMessage = MESSAGES.RESUME_UPLOAD_SUCCESSFULLY;
+        this.modalType = ModalType.Success;
         this.showModal = true;
         this.fetchResume();
         this.selectedResume = null;
-        
         setTimeout(() => this.uploadProgress = 0, 2000);
       },
       error: (err) => {
         this.isUploading = false;
-        console.error('Error uploading resume:', err);
-        this.modalMessage = 'Failed to upload resume.';
-        this.modalType = 'error';
+        this.modalMessage = MESSAGES.RESUME_UPLOAD_FAILED;
+        this.modalType = ModalType.Error;
         this.showModal = true;
         setTimeout(() => this.uploadProgress = 0, 2000);
       }
@@ -99,37 +104,31 @@ export class ResumeComponent implements OnInit {
 
   updateResume(): void {
     if (!this.selectedResume) {
-      this.modalMessage = 'Please select a resume file before updating';
-      this.modalType = 'warning';
+      this.modalMessage = MESSAGES.SELECT_FILE;
+      this.modalType = ModalType.Warning;
       this.showModal = true;
       return;
     }
-
     this.isUploading = true;
     this.simulateProgress();
-
     const formData = new FormData();
     formData.append('resume', this.selectedResume);
-
-    this.userService.updateResume(formData).subscribe({
+    this.userService.updateResume(formData).pipe(take(1)).subscribe({
       next: () => {
         this.isUploading = false;
         this.uploadProgress = 100;
-        this.modalMessage = 'Resume updated successfully!';
-        this.modalType = 'success';
+        this.modalMessage = MESSAGES.RESUME_UPLOAD_SUCCESSFULLY;
+        this.modalType = ModalType.Success;
         this.showModal = true;
         this.fetchResume();
         this.selectedResume = null;
-        
         setTimeout(() => this.uploadProgress = 0, 2000);
       },
       error: (err) => {
         this.isUploading = false;
-        console.error('Error updating resume:', err);
-        this.modalMessage = 'Failed to update resume';
-        this.modalType = 'error';
+        this.modalMessage = MESSAGES.RESUME_UPLOAD_FAILED;
+        this.modalType = ModalType.Error;
         this.showModal = true;
-        
         setTimeout(() => this.uploadProgress = 0, 2000);
       }
     });
@@ -140,20 +139,18 @@ export class ResumeComponent implements OnInit {
       this.showDeleteConfirmation();
       return;
     }
-    
-    this.userService.deleteResume().subscribe({
+    this.userService.deleteResume().pipe(take(1)).subscribe({
       next: () => {
-        this.modalMessage = 'Resume deleted successfully!';
-        this.modalType = 'success';
+        this.modalMessage = MESSAGES.RESUME_DELETE_SUCCESSFULLY;
+        this.modalType = ModalType.Success;
         this.showModal = true;
         this.resumeUrl = null;
         this.resumeName = null;
         this.confirmDelete = false;
       },
       error: (err) => {
-        console.error('Error deleting resume:', err);
-        this.modalMessage = 'Failed to delete resume';
-        this.modalType = 'error';
+        this.modalMessage =MESSAGES.RESUME_DELETE_FAILED;
+        this.modalType = ModalType.Error;
         this.showModal = true;
         this.confirmDelete = false;
       }
@@ -162,19 +159,16 @@ export class ResumeComponent implements OnInit {
 
   showDeleteConfirmation(): void {
     this.confirmDelete = true;
-    this.modalMessage = 'Are you sure you want to delete this resume?';
-    this.modalType = 'warning';
+    this.modalMessage = MESSAGES.ARE_YOU_SURE_DELETE_RESUME;
+    this.modalType = ModalType.Warning;
     this.showModal = true;
   }
 
-
   formatFileSize(bytes: number): string {
     if (bytes === 0) return '0 Bytes';
-    
     const k = 1024;
     const sizes = ['Bytes', 'KB', 'MB', 'GB'];
     const i = Math.floor(Math.log(bytes) / Math.log(k));
-    
     return parseFloat((bytes / Math.pow(k, i)).toFixed(2)) + ' ' + sizes[i];
   }
 
@@ -188,7 +182,6 @@ export class ResumeComponent implements OnInit {
       }
     }, 300);
   }
-
 
   closeModal(): void {
     this.showModal = false;

@@ -1,6 +1,5 @@
 import { Component, Input, Output, EventEmitter } from '@angular/core';
 
-
 @Component({
   selector: 'app-resume-modal',
   standalone: false,
@@ -10,7 +9,7 @@ import { Component, Input, Output, EventEmitter } from '@angular/core';
 export class ResumeModalComponent {
     @Input() showModal = false;
     @Input() message = '';
-    @Input() type: 'success' | 'error' | 'warning' = 'success';
+    @Input() type: string | null = null;
     @Output() closeModal = new EventEmitter<void>();
     @Output() confirmAction = new EventEmitter<void>();
   

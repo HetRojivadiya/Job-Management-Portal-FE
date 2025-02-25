@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { AdminService } from '../../services/admin.service';
 import { UserResponse } from '../../models/user-response.model';
+import { Subject, takeUntil } from 'rxjs';
 
 @Component({
   selector: 'app-user-list',
@@ -12,6 +13,7 @@ export class UserListComponent implements OnInit {
   users: UserResponse[] = [];
   currentPage = 1;
   itemsPerPage = 5;
+  private destroy = new Subject<void>();
 
   constructor(private adminService: AdminService) {}
 
@@ -19,18 +21,22 @@ export class UserListComponent implements OnInit {
     this.fetchUsers();
   }
 
+  ngOnDestroy(){
+    this.destroy.next();
+    this.destroy.complete();
+  }
+
   fetchUsers(): void {
-    this.adminService.getAllUsers().subscribe({
+    this.adminService.getAllUsers().pipe(takeUntil(this.destroy)).subscribe({
       next: (response) => {
-        // this.users = response.data;
          this.users = response.data.map(user => ({
           ...user,
-          totalApplications: this.getRandomApplicationCount() // Assign random value once
+          totalApplications: this.getRandomApplicationCount()
         }));
         
       },
       error: (err) => {
-        console.error('Error fetching users:', err);
+        throw err;
       },
     });
   }
@@ -69,7 +75,6 @@ export class UserListComponent implements OnInit {
   getRandomApplicationCount(): { value: number; color: string } {
     const randomValue = [8, 15, 21][Math.floor(Math.random() * 3)];
     const color = randomValue === 8 ? 'bg-red-500' : randomValue === 15 ? 'bg-yellow-500' : 'bg-green-500';
-  
     return { value: randomValue, color };
   }
   

@@ -3,6 +3,7 @@ import { CanActivateFn, Router } from '@angular/router';
 import { RoleService } from '../services/role.service';
 import { TokenService } from '../services/token.service';
 import { ROUTES } from '../../auth/constants/routes';
+import { CONDITION } from '../../shared/constants/conditional.constants';
 
 export const loggedInGuard: CanActivateFn = async (route, state) => {
   const router = inject(Router);
@@ -13,7 +14,7 @@ export const loggedInGuard: CanActivateFn = async (route, state) => {
 
   if(token)
   {
-    if(role==='Candidate')
+    if(role===CONDITION.CANDIDATE)
       {
         router.navigate([ROUTES.HOME]);
       }else{

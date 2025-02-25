@@ -8,6 +8,7 @@ import { ERROR_MESSAGES } from '../../constants/errors.constants';
 import { MESSAGES } from '../../constants/messages.constants';
 import { LoggerService } from '../../../core/services/logger.service';
 import { ROUTES } from '../../constants/routes';
+import { take } from 'rxjs';
 
 
 @Component({
@@ -74,7 +75,7 @@ export class SignupComponent {
       password: this.signupForm.value.password,
       mobile: this.signupForm.value.mobile,
     };
-    this.authService.signup(signupData).subscribe({
+    this.authService.signup(signupData).pipe(take(1)).subscribe({
       next: (res : SignupResponse) => {
         if (res.statusCode === 201) {
           this.toastr.success(res.message, MESSAGES.SIGNUP_SUCCESSFUL); 

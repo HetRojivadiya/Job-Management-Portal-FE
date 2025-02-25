@@ -1,15 +1,12 @@
 <div *ngIf="showSkillModal" class="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50">
     <div class="bg-white p-6 rounded-lg shadow-lg w-96">
       <h2 class="text-xl font-bold mb-4 text-center text-gray-800">Add New Skills</h2>
-  
       <div class="space-y-3 max-h-72 overflow-y-auto">
         <div *ngFor="let skill of newSkills; let i = index" class="flex items-center gap-2">
           <input [(ngModel)]="skill.skillName" type="text" placeholder="Skill Name"
                  class="border px-3 py-2 w-1/2 rounded focus:outline-none">
-  
           <input [(ngModel)]="skill.proficiencyLevel" type="number" min="1" max="10"
                  class="border px-3 py-2 w-1/4 rounded focus:outline-none focus:ring focus:ring-indigo-300">
-  
           <button (click)="removeSkill(i)" class="text-red-500 hover:text-red-700 text-lg">&times;</button>
         </div>
       </div>
@@ -17,7 +14,6 @@
               class="mt-2 w-full bg-blue-100 text-blue-700 font-semibold py-2 rounded hover:bg-blue-200 transition">
         + Add More Skill
       </button>
-  
       <div class="flex justify-end gap-3 mt-4">
         <button (click)="closeSkillModal()" class="px-4 py-2 bg-gray-400 text-white rounded hover:bg-gray-500">Cancel</button>
         <button (click)="addSkills()" class="px-4 py-2 bg-indigo-600 text-white rounded hover:bg-indigo-700">Save Skills</button>

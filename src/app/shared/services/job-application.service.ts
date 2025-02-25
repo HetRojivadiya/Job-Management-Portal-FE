@@ -11,17 +11,15 @@ import { API_ENDPOINTS } from '../constants/api-endpoints.constants';
 export class JobApplicationService {
   constructor(private http: HttpClient,private apiService:ApiService) {}
 
-  appyliedJobs(jobId : string)
-  {
+  appyliedJobs(jobId : string){
      return this.apiService.get<AppliedJobsResponse>(`${API_ENDPOINTS.APPLIED_URL}/${jobId}`);
   }
 
-  applyForJob(formData: FormData)
-  {
+  applyForJob(formData: FormData){
     return this.apiService.post<FormData>(API_ENDPOINTS.APPLY_URL, formData);
   }
 
-  deleteJobApplication(applicationId: string): Observable<any> {
+  deleteJobApplication(applicationId: string): Observable<void> {
     return this.apiService.delete(`${API_ENDPOINTS.DELETED_APPLIED_URL}/${applicationId}`);
   }
   

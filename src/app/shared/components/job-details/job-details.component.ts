@@ -5,6 +5,7 @@ import { Location } from '@angular/common';
 import { Job } from '../../model/job.model';
 import { Subscription, switchMap } from 'rxjs';
 import { ROUTES } from '../../../auth/constants/routes';
+import { ERROR } from '../../constants/error.constants';
 
 @Component({
   selector: 'app-job-details',
@@ -30,14 +31,14 @@ export class JobDetailsComponent implements OnInit, OnDestroy {
         if (jobId) {
           return this.jobService.fetchJobDetails(jobId);
         }
-        throw new Error('No job ID provided');
+        throw new Error(ERROR.NO_JOBID);
       })
     ).subscribe({
       next: (response: Job) => {
         this.jobDetails = response;
       },
       error: (err) => {
-        console.error('Error fetching job details:', err);
+        throw err;
       }
     });
   }

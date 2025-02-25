@@ -19,4 +19,5 @@ export const API_ENDPOINTS = {
   UPDATE_RESUME_URL : '/resume/update',
   UPLOAD_RESUME_URL : '/resume/upload',
   DELETE_RESUME_URL : '/resume/delete',
+  GET_RESUME_LINK : 'http://localhost:4000/uploads/resumes/'
 };

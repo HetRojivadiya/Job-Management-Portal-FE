@@ -1,5 +1,3 @@
-
-   <!-- userList -->
    <app-user-list/>
   
    <div class="p-4">
@@ -10,5 +8,5 @@
     
     <app-job-create-modal *ngIf="isModalOpen" (closeModal)="isModalOpen = false" (jobCreated)="fetchJobs()" />
     
-    <app-job-container #jobContainer/>
+    <app-job-container />
    

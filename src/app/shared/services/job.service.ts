@@ -23,8 +23,8 @@ export class JobService {
     return this.apiService.delete<void>(`${API_ENDPOINTS.JOBS_URL}/${jobId}`);
   }
 
-  createJob(jobData: any): Observable<any> {
-    return this.apiService.post<any>(API_ENDPOINTS.JOBS_URL, jobData);
+  createJob(jobData: Job): Observable<Job> {
+    return this.apiService.post<Job>(API_ENDPOINTS.JOBS_URL, jobData);
   }
 
   fetchJobDetails(jobId: string): Observable<Job> {

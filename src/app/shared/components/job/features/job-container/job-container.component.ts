@@ -3,6 +3,9 @@ import { JobService } from '../../../../services/job.service';
 import { Job } from '../../../../model/job.model';
 import { RoleService } from '../../../../../core/services/role.service';
 import { JobApplicationService } from '../../../../services/job-application.service';
+import { CONDITION } from '../../../../constants/conditional.constants';
+import { MESSAGES } from '../../../../constants/message.constants';
+import { Subject, take, takeUntil } from 'rxjs';
 
 @Component({
   selector: 'app-job-container',
@@ -19,7 +22,10 @@ export class JobContainerComponent implements OnInit {
   jobToDelete: string | null = null;
   isApplyModalOpen: boolean = false;
   selectedJobId: string | null = null; 
-  Admin : string ='Admin';
+  message :string = MESSAGES.ARE_YOU_SURE_DELETE_JOB;
+  private destroy = new Subject<void>();
+  
+  
 
   constructor(private jobService: JobService, private roleService: RoleService,private jobApplicationService : JobApplicationService) {}
 
@@ -27,21 +33,27 @@ export class JobContainerComponent implements OnInit {
     this.checkAdminStatus();
     this.fetchJobs();
   }
+  ngOnDestroy(){
+    this.destroy.next();
+    this.destroy.complete();
+  }
+ 
+ 
 
   fetchJobs(): void {
-    this.jobService.getJobs().subscribe({
+    this.jobService.getJobs().pipe(takeUntil(this.destroy)).subscribe({
       next: (data) => {
         this.jobs = data;
       },
       error: (err) => {
-        console.error(err);
+          throw err;
       },
     });
   }
 
   async checkAdminStatus(): Promise<void> {
     const role = await this.roleService.getRole();
-    this.isAdmin = role === this.Admin;
+    this.isAdmin = role === CONDITION.ADMIN;
   }
 
   openEditModal(job: Job): void {
@@ -70,13 +82,13 @@ export class JobContainerComponent implements OnInit {
 
   confirmDelete(): void {
     if (this.jobToDelete) {
-      this.jobService.deleteJob(this.jobToDelete).subscribe({
+      this.jobService.deleteJob(this.jobToDelete).pipe(take(1)).subscribe({
         next: () => {
           this.jobs = this.jobs.filter(job => job.id !== this.jobToDelete);
           this.closeDeleteModal();
         },
         error: (err) => {
-          console.error(err);
+           throw err;
         },
       });
     }
@@ -97,10 +109,7 @@ export class JobContainerComponent implements OnInit {
     this.closeApplyModal();
   }
 
-
   handleJobCreated(): void {
     this.fetchJobs(); 
   }
-  
-  
 }

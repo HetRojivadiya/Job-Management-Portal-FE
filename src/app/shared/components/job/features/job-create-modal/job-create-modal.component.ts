@@ -1,6 +1,7 @@
 import { Component, EventEmitter, Output } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { JobService } from '../../../../services/job.service';
+import { take } from 'rxjs';
 
 @Component({
   selector: 'app-job-create-modal',
@@ -14,14 +15,12 @@ export class JobCreateModalComponent {
 
   jobForm: FormGroup;
   isDropdownOpen = false;
-
   availableSkills: string[] = [
     'Java', 'Spring Boot', 'Angular', 'React', 'Node.js',
     'Python', 'Django', 'Flask', 'C#', '.NET',
     'SQL', 'MongoDB', 'GraphQL', 'Docker', 'Kubernetes',
     'AWS', 'Azure', 'Firebase', 'Flutter', 'Swift'
   ];
-
   selectedSkills: string[] = [];
 
   constructor(private fb: FormBuilder, private jobService: JobService) {
@@ -57,7 +56,7 @@ export class JobCreateModalComponent {
   submitJob(): void {
     if (this.jobForm.valid) {
       const newJob = this.jobForm.value;
-      this.jobService.createJob(newJob).subscribe(() => {
+      this.jobService.createJob(newJob).pipe(take(1)).subscribe(() => {
         this.jobCreated.emit();
         this.closeModal.emit();
       });

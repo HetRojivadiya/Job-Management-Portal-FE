@@ -21,4 +21,7 @@ export interface UserSkill {
       updatedAt: string;
     };
   }
-  
+
+  export interface ProfileResponse {
+    data: UserProfile;
+  }

@@ -7,6 +7,7 @@ import { ROUTES } from '../../constants/routes';
 import { ERROR_MESSAGES } from '../../constants/errors.constants';
 import { LoggerService } from '../../../core/services/logger.service';
 import { MESSAGES } from '../../constants/messages.constants';
+import { take } from 'rxjs';
 
 @Component({
   selector: 'app-otp',
@@ -35,7 +36,7 @@ export class OtpComponent implements OnInit {
   ngOnInit() {
     this.token = localStorage.getItem('token') || '';
     localStorage.removeItem('token');
-    this.route.url.subscribe((segments) => {
+    this.route.url.pipe(take(1)).subscribe((segments) => {
       this.isEnable2FAPage = segments.some(segment => segment.path === 'enable2FA');
     });
   }
@@ -46,7 +47,7 @@ export class OtpComponent implements OnInit {
       return;
     }
     const otpData = { otp: this.otpForm.value.otp, token: this.token };
-    this.authService.verifyOtp(otpData).subscribe({
+    this.authService.verifyOtp(otpData).pipe(take(1)).subscribe({
       next: (res) => {
         if (res.statusCode === 200) {
           this.toastr.success(MESSAGES.OTP_VERIFIED_SUCCESSFULLY);
@@ -62,7 +63,7 @@ export class OtpComponent implements OnInit {
 
   enable2FA() {
     localStorage.setItem('token', this.token);
-    this.authService.enable2FA().subscribe({
+    this.authService.enable2FA().pipe(take(1)).subscribe({
       next: (res) => {
         localStorage.setItem('qrCode', res.qrCode);
         localStorage.setItem('enable2FAMessage', res.message);

@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { AuthService } from '../../../core/services/auth.service';
 import { ROUTES } from '../../constants/routes';
+import { take } from 'rxjs';
 
 @Component({
   selector: 'app-verify-success',
@@ -20,12 +21,12 @@ export class VerifySuccessComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    this.route.params.subscribe(params => {
+    this.route.params.pipe(take(1)).subscribe(params => {
       const token = params['token'];
 
       const tokenData = { token : token}; 
       if (token) {
-        this.authService.verifyToken(tokenData).subscribe({
+        this.authService.verifyToken(tokenData).pipe(take(1)).subscribe({
           next: (response) => {
             if (response.status) {
               this.isVerified = true;
@@ -33,8 +34,8 @@ export class VerifySuccessComponent implements OnInit {
             }
           },
           error: (err) => {
-            console.error(err);
             this.router.navigate([ROUTES.SIGNIN]);
+            throw err;
           }
         });
       }

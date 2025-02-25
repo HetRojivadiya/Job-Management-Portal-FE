@@ -1,0 +1,6 @@
+export const CONDITION = {
+    CANDIDATE : 'Candidate',
+    ADMIN :"Admin",
+    MINIMUM_PROFICIENCY_LEVEL : 0,
+    MAXIMUM_PROFICIENCY_LEVEL : 10
+}

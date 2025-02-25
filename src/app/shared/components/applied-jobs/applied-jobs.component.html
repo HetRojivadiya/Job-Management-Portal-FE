@@ -1,6 +1,5 @@
 <div class="flex-1 bg-white rounded-lg shadow-xl p-8">
   <h4 class="text-xl text-gray-900 font-bold">Applied Jobs</h4>
-
   <div class="grid grid-cols-1 lg:grid-cols-3 gap-8 mt-4 mb-6">
     <div class="px-6 py-6 bg-gray-100 border border-gray-300 rounded-lg shadow-xl">
       <div class="flex items-center justify-between">
@@ -11,7 +10,6 @@
         <div class="w-20 hover:scale-110 transition-transform duration-200">
           <img src="images/profile/approval.png" alt="" class="cursor-pointer" />
         </div>
-
         <div class="flex flex-col">
           <div class="flex items-end">
             <span class="text-2xl 2xl:text-3xl font-bold">2</span>
@@ -47,10 +45,7 @@
       </div>
     </div>
   </div>
-
-  <!-- Layout container for job list and details panel -->
   <div class="flex flex-col lg:flex-row gap-6 mt-6">
-    <!-- Left side: Job list -->
     <div class="w-full lg:w-2/5">
       <div *ngFor="let job of appliedJobs; let i = index" class="px-6 py-6 bg-white border border-gray-200 mt-2 rounded-xl shadow-lg hover:shadow-xl transition-shadow duration-300">
         <div class="flex items-center justify-between">
@@ -59,7 +54,6 @@
             {{ job.deadline | date: 'shortDate' }}
           </span>
         </div>
-      
         <div class="mt-4">
           <p class="text-gray-700 leading-relaxed line-clamp-2">{{ job.description }}</p>
           <div class="flex flex-wrap items-center mt-3 text-sm text-gray-600">
@@ -78,7 +72,6 @@
             </div>
           </div>
         </div>
-        
         <div class="mt-5 pt-4 border-t border-gray-100">
           <div class="flex justify-end">
             <button (click)="showJobDetails(job)" class="px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white text-sm font-medium rounded-lg transition duration-200">
@@ -88,8 +81,6 @@
         </div>
       </div>
     </div>
-    
-    <!-- Right side: Job details panel -->
     <div *ngIf="selectedJob" class="w-full lg:w-3/5 bg-white border border-gray-200 rounded-xl shadow-lg p-6 lg:sticky lg:top-4 lg:self-start">
       <div class="flex justify-between items-start">
         <div>
@@ -114,18 +105,15 @@
           {{ selectedJob.deadline | date: 'shortDate' }}
         </span>
       </div>
-
       <div class="mt-6">
         <h3 class="text-lg font-medium text-gray-800 mb-2">Job Description</h3>
         <p class="text-gray-700 leading-relaxed mb-6">{{ selectedJob.description }}</p>
-        
         <h3 class="text-lg font-medium text-gray-800 mb-2">Required Skills</h3>
         <div class="flex flex-wrap gap-2 mb-6">
           <span *ngFor="let skill of selectedJob.skills" class="px-3 py-1 bg-gray-100 text-gray-700 text-sm rounded-full">
             {{ skill.skillName }}
           </span>
         </div>
-        
         <h3 class="text-lg font-medium text-gray-800 mb-2">Application Status</h3>
         <div class="flex items-center mb-6">
           <span class="inline-flex items-center px-3 py-1 rounded-full text-sm"
@@ -138,15 +126,13 @@
             {{ selectedJob.status }}
           </span>
         </div>
-      
       </div>
-      
       <div class="mt-8 pt-6 border-t border-gray-200">
         <div class="flex justify-between">
           <button (click)="closeJobDetails()" class="px-4 py-2 bg-gray-200 hover:bg-gray-300 text-gray-700 text-sm font-medium rounded-lg transition duration-200">
             Back to List
           </button>
-           <button *ngIf="isCandidate" (click)="deleteAppliedJob(selectedJob.applicationId)" class="px-4 py-2 bg-red-600 hover:bg-red-700 text-white text-sm font-medium rounded-lg transition duration-200">
+          <button *ngIf="isCandidate" (click)="selectedJob.applicationId ? deleteAppliedJob(selectedJob.applicationId) : null" class="px-4 py-2 bg-red-600 hover:bg-red-700 text-white text-sm font-medium rounded-lg transition duration-200">
             Cancel Application
           </button>
            <button *ngIf="!isCandidate"  class="px-4 py-2 bg-yellow-500 hover:bg-yello-700 text-white text-sm font-medium rounded-lg transition duration-200">
@@ -158,8 +144,6 @@
         </div>
       </div>
     </div>
-
-    <!-- Empty state for when no job is selected -->
     <div *ngIf="!selectedJob" class="w-full lg:w-3/5 bg-white border border-gray-200 rounded-xl shadow-lg p-6 flex items-center justify-center">
       <div class="text-center p-8">
         <div class="mx-auto w-16 h-16 mb-4 text-gray-300">

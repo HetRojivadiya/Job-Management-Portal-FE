@@ -48,11 +48,8 @@ export class FilterSidebarComponent {
     this.applyFilters();
   }
   
-  hasAppliedFilters(): boolean {
-    return this.filters.remote || this.filters.onsite || this.filters.hybrid || 
-           this.filters.entry || this.filters.mid || this.filters.senior ||
-           this.filters.salary !== 100000 || this.filters.skill !== '' || 
-           this.filters.location !== '';
+  hasAppliedFilters() {
+  
   }
   
   removeFilter(filterName: string): void {

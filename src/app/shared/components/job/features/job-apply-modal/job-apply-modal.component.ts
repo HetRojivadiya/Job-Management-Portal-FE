@@ -1,6 +1,7 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { JobApplicationService } from '../../../../services/job-application.service';
+import { take } from 'rxjs';
 
 @Component({
   selector: 'app-job-apply-modal',
@@ -48,7 +49,7 @@ export class JobApplyModalComponent {
     formData.append('jobId', this.jobId);
     formData.append('resume', this.selectedFile);
 
-    this.jobApplicationService.applyForJob(formData).subscribe({
+    this.jobApplicationService.applyForJob(formData).pipe(take(1)).subscribe({
       next: () => {
         this.isSubmitting = false;
         this.showSuccess = true;
