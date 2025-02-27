@@ -11,6 +11,7 @@ export const API_ENDPOINTS = {
   APPLY_URL : '/job-application/apply',
   APPLIED_URL :'/job-application/applied',
   DELETED_APPLIED_URL :'/job-application',
+  CHANGE_APPLICATION_STATUS : '/job-application/application-status',
   JOBS_URL : '/jobs',
   GET_RECOMMENDED_JOB_URL : '/jobs/recommended',
   GET_PROFILE_URL : '/user/get-user-profile/',
@@ -19,5 +20,6 @@ export const API_ENDPOINTS = {
   UPDATE_RESUME_URL : '/resume/update',
   UPLOAD_RESUME_URL : '/resume/upload',
   DELETE_RESUME_URL : '/resume/delete',
+
   GET_RESUME_LINK : 'http://localhost:4000/uploads/resumes/'
 };

@@ -18,6 +18,7 @@ export interface Skill {
     updatedAt: string;
     skills: Skill[];
     status?: string;
+    rejectionMassage?:string;
   }
   
 

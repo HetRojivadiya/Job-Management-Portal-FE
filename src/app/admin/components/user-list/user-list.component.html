@@ -1,73 +1,14 @@
-<div class="overflow-x-auto font-[sans-serif] bg-gray-50 p-6 rounded-lg shadow-lg">
-  <table class="min-w-full bg-white table-fixed shadow-md rounded-lg">
-    <thead class="whitespace-nowrap bg-gray-200 text-black rounded-t-lg">
-      <tr>
-        <th class="p-4 text-left text-sm font-semibold w-[200px]">Username</th>
-        <th class="p-4 text-left text-sm font-semibold w-[250px]">Email</th>
-        <th class="p-4 text-left text-sm font-semibold w-[150px]">Mobile</th>
-        <th class="p-4 text-left text-sm font-semibold w-[200px]">Skills</th>
-        <th class="p-4 text-left text-sm font-semibold w-[200px]">Total Applications</th>
-        <th class="p-4 text-left text-sm font-semibold w-[150px]">Action</th>
-      </tr>
-    </thead>
-
-    <tbody class="whitespace-nowrap bg-white divide-y divide-gray-200">
-      <tr *ngFor="let user of paginatedUsers" class="hover:bg-gray-100 transition duration-200">
-        <td class="p-4 text-sm text-black w-[200px]">
-          <div class="flex items-center w-max">
-            <img [src]="'images/avatar/avatar_' + ((user.userId.charCodeAt(0) % 24) + 1) + '.jpg'" class="w-10 h-10 rounded-full shadow-md" />
-            <div class="ml-3">
-              <p class="text-sm font-medium text-gray-900 truncate">{{ user.username }}</p>
-            </div>
-          </div>
-        </td>
-        <td class="p-4 text-sm text-black w-[250px] truncate">
-          {{ user.email }}
-          <p class="text-xs text-gray-500 mt-1">{{ user.status }}</p>
-        </td>
-        <td class="p-4 text-sm text-black w-[150px] truncate">{{ user.mobile }}</td>
-        <td class="p-4 text-sm text-black w-[200px]">
-          <ng-container *ngIf="user.skills.length > 0; else noSkills">
-            <span *ngFor="let skill of user.skills.slice(0, 3)" class="bg-gray-200 px-2 py-1 rounded text-xs shadow-sm mr-2">
-              {{ skill.skillName }}
-            </span>
-          </ng-container>
-          <span *ngIf="user.skills.length > 3" class="text-gray-500 text-xs">...</span>
-          <ng-template #noSkills>
-            <span class="text-gray-500 text-xs">No Skills</span>
-          </ng-template>
-        </td>
-        <td class="p-4 w-[200px]">
-          <div class="bg-gray-300 rounded-full w-full h-2">
-            <div class="h-full rounded-full" [ngClass]="user.totalApplications?.color || 'bg-gray-500'" 
-                 [style.width.%]="user.totalApplications ? (user.totalApplications.value / 21) * 100 : 0"></div>
-          </div>
-          <p class="text-xs text-gray-500 mt-1">Total: {{ user.totalApplications?.value || 0 }}</p>
-        </td>
-        
-        <td class="p-4 w-[150px]">
-          <button class="px-4 py-2 text-white bg-blue-600 hover:bg-blue-700 rounded shadow-md transition duration-200"
-                  [routerLink]="['/profile', user.userId]">
-            View Details
-          </button>
-        </td>
-        
-      </tr>
-    </tbody>
-  </table>
-
-  <!-- Pagination Controls -->
-  <div class="md:flex m-4 items-center justify-between">
-    <p class="text-sm text-gray-500">Showing {{ startIndex }} to {{ endIndex }} of {{ users.length }} entries</p>
-    <div class="flex items-center max-md:mt-4">
-      <p class="text-sm text-gray-500">Display</p>
-      <select class="text-sm text-gray-500 border border-gray-400 rounded px-2 py-1 mx-4 outline-none shadow-sm" (change)="updateItemsPerPage($event)">
-        <option *ngFor="let count of [5, 10, 20, 50, 100]" [value]="count">{{ count }}</option>
-      </select>
-      <div class="border flex rounded divide-x-2 border-gray-400 divide-gray-400 shadow-sm">
-        <button type="button" class="px-4 py-2 hover:bg-gray-100 text-sm" (click)="changePage('prev')" [disabled]="currentPage === 1">Previous</button>
-        <button type="button" class="px-4 py-2 hover:bg-gray-100 text-sm" (click)="changePage('next')" [disabled]="currentPage * itemsPerPage >= users.length">Next</button>
-      </div>
-    </div>
-  </div>
-</div>
+<app-data-grid
+  #dataGrid
+  [title]="'User List'"
+  [rowData]="users"
+  [columnDefs]="columnDefs"
+  [defaultColDef]="defaultColDef"
+  [allColumns]="allColumns"
+  [showColumnDropdown]="showColumnDropdown"
+  [height]="'500px'"
+  [rowHeight]="60"
+  (gridReady)="onGridReady($event)"
+  (cellClicked)="onCellClicked($event)"
+  (exportCsv)="exportToCsv()"
+></app-data-grid>

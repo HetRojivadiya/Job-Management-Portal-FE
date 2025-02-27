@@ -10,6 +10,7 @@ import { JobDetailsComponent } from './shared/components/job-details/job-details
 import { ROUTING } from './shared/constants/routes';
 import { ROUTES } from './auth/constants/routes';
 import { CONDITION } from './shared/constants/conditional.constants';
+import { ExampleComponent } from './shared/components/example/example.component';
 
 
 
@@ -22,6 +23,7 @@ const routes: Routes = [
   { path: ROUTING.NOT_FOUND, component: NotFoundComponent },
   { path: ROUTING.PROFILE, component: ProfileComponent },
   { path: ROUTING.JOB_DETAILS, component: JobDetailsComponent },
+  { path: 'example', component: ExampleComponent },
   { path: '**', redirectTo: 'notfound' } ,
   
 ];

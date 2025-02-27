@@ -18,17 +18,21 @@ import { RouterModule } from '@angular/router';
 import { RecommandedJobsComponent } from './components/recommanded-jobs/recommanded-jobs.component';
 import { TimeAgoPipe } from './pipes/time-ago.pipe';
 
+import { ExampleComponent } from './components/example/example.component';
+import { AgGridAngular } from 'ag-grid-angular';
+import { DataGridComponent } from './components/data-grid/data-grid.component'; 
 
 
 @NgModule({
-  declarations: [JobUpdateModalComponent, ConfirmDialogComponent, JobContainerComponent, JobListComponent, JobItemComponent, ProfileComponent, AddSkillModalComponent, ResumeComponent, ResumeModalComponent, AppliedJobsComponent, JobCreateModalComponent, JobApplyModalComponent, JobDetailsComponent, RecommandedJobsComponent, ],
+  declarations: [JobUpdateModalComponent, ConfirmDialogComponent, JobContainerComponent, JobListComponent, JobItemComponent, ProfileComponent, AddSkillModalComponent, ResumeComponent, ResumeModalComponent, AppliedJobsComponent, JobCreateModalComponent, JobApplyModalComponent, JobDetailsComponent, RecommandedJobsComponent, ExampleComponent, DataGridComponent, ],
   imports: [
     CommonModule,
       FormsModule,
       ReactiveFormsModule,
       RouterModule,
       TimeAgoPipe,
+      AgGridAngular,
   ],
-  exports: [JobContainerComponent,ProfileComponent,JobCreateModalComponent,JobDetailsComponent,TimeAgoPipe],  
+  exports: [JobContainerComponent,ProfileComponent,JobCreateModalComponent,JobDetailsComponent,TimeAgoPipe,DataGridComponent],  
 })
 export class SharedModule { }

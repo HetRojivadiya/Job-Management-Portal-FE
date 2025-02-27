@@ -1,4 +1,4 @@
-<div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-8 p-6 bg-gray-200 rounded-lg ">    
+<div *ngIf="!isAdmin" class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-8 p-6 bg-gray-200 rounded-lg ">    
     <app-job-item
       *ngFor="let job of jobs"
       [job]="job"
@@ -9,3 +9,20 @@
     </app-job-item>
   </div>
   
+
+  <!--  i want here ag grid job list when i logged in with admin -->
+
+  <app-data-grid
+  #dataGrid
+  [title]="'Job List'"
+  [rowData]="jobs"
+  [columnDefs]="columnDefs"
+  [defaultColDef]="defaultColDef"
+  [allColumns]="allColumns"
+  [showColumnDropdown]="showColumnDropdown"
+  [height]="'500px'"
+  [rowHeight]="60"
+  (gridReady)="onGridReady($event)"
+  (exportCsv)="exportToCsv()"
+  (cellClicked)="onCellClicked($event)" 
+></app-data-grid>

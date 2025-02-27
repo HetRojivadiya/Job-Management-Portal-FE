@@ -1,29 +1,28 @@
-
 :host ::ng-deep {
     .ag-theme-quartz {
       --ag-header-height: 50px;
       --ag-header-foreground-color: black;
-      --ag-header-background-color: #e5e7eb; 
-      --ag-row-hover-color: #f3f4f6; 
+      --ag-header-background-color: #e5e7eb;
+      --ag-row-hover-color: #f3f4f6;
       --ag-font-size: 14px;
       --ag-font-family: sans-serif;
       --ag-border-color: #e5e7eb;
       --ag-cell-horizontal-padding: 16px;
-      
+  
       border-radius: 8px;
       overflow: hidden;
     }
-    
+  
     .ag-header-cell {
       font-weight: 600;
       border-bottom: 1px solid #e5e7eb;
     }
-    
+  
     .ag-row {
       border-bottom: 1px solid #f3f4f6;
       transition: background-color 0.2s;
     }
-    
+  
     /* Pagination panel styling */
     .ag-paging-panel {
       border-top: 1px solid #e5e7eb;
@@ -31,19 +30,57 @@
       font-size: 14px;
       color: #6b7280;
     }
-    
+  
     .ag-paging-button {
       border: 1px solid #d1d5db;
       border-radius: 4px;
-      
+  
       &:hover:not(.ag-disabled) {
         background-color: #f9fafb;
       }
     }
+  
     .ag-cell-value {
       display: flex;
       align-items: center;
       height: 100%;
       width: 100%;
     }
+  
+
+    .ag-floating-filter-full-body {
+      background-color: #f3f4f6 !important;
+      border: 1px solid #d1d5db !important; 
+      border-radius: 4px; 
+      color: #374151 !important;
+      padding: 5px;
+    }
+  
+    .ag-floating-filter-input {
+      background-color: #d4d4d4 !important; 
+      color: #1f2937 !important; 
+     
+      padding: 6px;
+      margin: 5px;
+      border-radius: 4px;
+      width: 100%;
+    }
+  
+    
+    .ag-floating-filter-input::placeholder {
+      color: #6b7280 !important;
+    }
+  
+ 
+    .ag-floating-filter-full-body:hover {
+      background-color: #e5e7eb !important;
+    }
+  
+    
+    .ag-floating-filter-input:focus {
+      outline: none;
+      border-color: #3b82f6 !important;
+      box-shadow: 0 0 4px rgba(59, 130, 246, 0.5);
+    }
   }
+  

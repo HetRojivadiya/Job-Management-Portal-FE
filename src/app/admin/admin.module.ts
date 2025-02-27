@@ -10,6 +10,7 @@ import { AdminHeaderSidebarComponent } from './components/header-sidebar/admin-h
 import { UserListComponent } from './components/user-list/user-list.component';
 import { SharedModule } from '../shared/shared.module';
 import { RootComponent } from './components/root/root.component';
+import { AgGridAngular } from 'ag-grid-angular';
 
 
 @NgModule({
@@ -21,11 +22,14 @@ import { RootComponent } from './components/root/root.component';
     AdminHeaderSidebarComponent,
     UserListComponent,
     RootComponent,
+   
+    
   ],
   imports: [
     CommonModule,
     AdminRoutingModule,
     SharedModule,
+    AgGridAngular,
   ]
 })
 export class AdminModule { }
