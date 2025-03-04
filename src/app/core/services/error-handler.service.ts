@@ -14,6 +14,6 @@ export class ErrorHandlerService implements ErrorHandler {
     if (error instanceof Error) {
       errorMessage = error.message;
     }
-    toastr.error(errorMessage, 'Error');
+    //toastr.error(errorMessage, 'Error');
   }
 }

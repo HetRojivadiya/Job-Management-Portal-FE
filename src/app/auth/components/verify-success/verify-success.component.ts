@@ -28,7 +28,7 @@ export class VerifySuccessComponent implements OnInit {
       if (token) {
         this.authService.verifyToken(tokenData).pipe(take(1)).subscribe({
           next: (response) => {
-            if (response.status) {
+            if (response) {
               this.isVerified = true;
               this.startCountdown();
             }

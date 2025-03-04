@@ -53,7 +53,7 @@ export class JobListComponent {
     }
   }
 
-  static titleCellRenderer(params: any) {
+  static titleCellRenderer(params: {data : Job}) {
     if (!params.data) return '';
 
     const colors = [
@@ -76,22 +76,22 @@ export class JobListComponent {
   }
   
 
-  static locationCellRenderer(params: any) {
+  static locationCellRenderer(params: {data : Job}) {
     if (!params.data) return '';
     return `<div class="leading-tight"><span class="truncate">${params.data.location || ''}</span></div>`;
   }
 
-  static salaryCellRenderer(params: any) {
+  static salaryCellRenderer(params: {data : Job}) {
     if (!params.data) return '';
     return `<div class="leading-tight"><span class="truncate">${params.data.salary_range || ''}</span></div>`;
   }
 
-  static descriptionCellRenderer(params: any) {
+  static descriptionCellRenderer(params: {data : Job}) {
     if (!params.data) return '';
     return `<div class="leading-tight"><span class="truncate">${params.data.description || ''}</span></div>`;
   }
 
-  static actionCellRenderer(params: any) {
+  static actionCellRenderer(params: {data : Job}) {
     if (!params.data) return '';
     return `
      <div class="flex gap-2 items-center">
@@ -124,13 +124,16 @@ export class JobListComponent {
     this.gridApi.exportDataAsCsv(params);
   }
 
-  onCellClicked(event: any) {
-    const action = event.event.target.getAttribute('data-action');
-    const jobId = event.event.target.getAttribute('data-id');
-    if (action === 'edit') {
-      this.editJob.emit(event.data); 
-    } else if (action === 'delete') {
+  onCellClicked(event: { event: Event; data: Job }) {
+    const target = event.event.target as HTMLElement;
+    const action = target.getAttribute('data-action');
+    const jobId = target.getAttribute('data-id');
+  
+    if (action === 'edit' && event.data) {
+      this.editJob.emit(event.data);
+    } else if (action === 'delete' && jobId) {
       this.deleteJob.emit(jobId);
     }
   }
+  
 }

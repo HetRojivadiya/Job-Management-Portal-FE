@@ -29,11 +29,16 @@ export class JobApplyModalComponent {
     });
   }
 
-  onFileChange(event: any): void {
-    if (event.target.files.length > 0) {
-      this.selectedFile = event.target.files[0];
+  onFileChange(event: Event): void {
+    const input = event.target as HTMLInputElement;
+    if (input.files && input.files.length > 0) {
+      const file = input.files[0];
+      if (file.type === 'application/pdf') {
+        this.selectedFile = file;
+      } 
     }
   }
+  
 
   clearSelectedFile(event: Event): void {
     event.stopPropagation();

@@ -1,28 +1,27 @@
 <div class="space-y-4">
-  <ng-container *ngIf="recommendedJobs.length === 0">
+  <ng-container *ngIf="applicants.length === 0">
     <div class="w-full py-6 flex flex-col items-center text-gray-500">
       <svg xmlns="http://www.w3.org/2000/svg" class="h-12 w-12 mb-2 text-gray-300" fill="none" viewBox="0 0 24 24" stroke="currentColor">
         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z" />
       </svg>
-      <span class="text-lg font-medium">Please Update Your Profile</span>
-      <span class="text-lg font-medium">For Job Recommandation</span>
+      <span class="text-lg font-medium">No applicants added yet</span>
     </div>
   </ng-container>
-<div *ngFor="let job of recommendedJobs" class="border rounded-lg p-4 bg-white shadow-sm hover:shadow-md transition-shadow">
-  <a [routerLink]="['/job-details',job.id]">
+  <div *ngFor="let applicant of applicants" class="border rounded-lg p-4 bg-white shadow-sm hover:shadow-md transition-shadow">
+    <a [routerLink]="['/profile',applicant.userId]">
     <div class="flex items-start justify-between">
       <div class="flex gap-4">
-        <div class="w-12 h-12 rounded-lg flex items-center justify-center" [ngClass]="job.colorClass">
-          <span class="text-white text-xl">{{ job.title.charAt(0) }}</span>
+        <div class="w-12 h-12 rounded-lg flex items-center justify-center" [ngClass]="applicant.colorClass">
+          <span class="text-white text-xl">{{ applicant.username.charAt(0) }}</span>
         </div>
         <div>
-          <h3 class="font-semibold text-gray-800">{{job.title}}</h3>
+          <h3 class="font-semibold text-gray-800">{{ applicant.username }}</h3>
           <div class="flex gap-4 mt-2">
-            <span class="text-gray-600">Fulltime</span>
-            <span class="text-gray-600">{{job.location}}</span>
-            <span class="text-gray-600">{{job.experience_level}} Years</span>
+            <span class="text-gray-600">{{ applicant.email }}</span>
+            <span class="text-gray-600">{{ applicant.mobile }}</span>
+       
           </div>
-          <p class="text-gray-500 text-sm mt-2">{{job.createdAt | timeAgo }}   • 521 Applicants</p>
+          <p class="text-gray-500 text-sm mt-2">{{ applicant.createdAt | date: 'medium' }}</p>
         </div>
       </div>
       <button class="p-2 text-gray-400 hover:text-yellow-500">
@@ -31,6 +30,6 @@
         </svg>
       </button>
     </div>
-   </a>
+  </a>
   </div>
 </div>

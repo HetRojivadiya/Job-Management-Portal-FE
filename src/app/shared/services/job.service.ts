@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { Observable } from 'rxjs';
+import { map, Observable } from 'rxjs';
 import { ApiService } from '../../core/services/api.service';
 import { Job } from '../model/job.model';
 import { API_ENDPOINTS } from '../constants/api-endpoints.constants';
@@ -34,5 +34,12 @@ export class JobService {
   getRecommendedJobs(): Observable<Job[]> {
     return this.apiService.get<Job[]>(API_ENDPOINTS.GET_RECOMMENDED_JOB_URL);
   }
+
+  getJobCount(year: number): Observable<number[]> {
+    return this.apiService.get<{ statusCode: number; message: string; data: number[] }>(
+      `${API_ENDPOINTS.JOB_COUNT}?year=${year}`
+    ).pipe(map(response => response.data));
+  }
   
+
 }

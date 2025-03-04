@@ -56,15 +56,19 @@ export class ResumeComponent implements OnInit {
     });
   }
 
-  onFileSelected(event: any): void {
-    if (event.target.files.length > 0) {
-      this.selectedResume = event.target.files[0];
-      this.selectedResumeSize = this.selectedResume?.size 
-      ? this.formatFileSize(this.selectedResume.size) 
-      : null;
+  onFileSelected(event: Event): void {
+    const input = event.target as HTMLInputElement;
+    if (input.files && input.files.length > 0) {
+      this.selectedResume = input.files[0];
+  
+      this.selectedResumeSize = this.selectedResume.size 
+        ? this.formatFileSize(this.selectedResume.size) 
+        : null;
+  
       this.uploadProgress = 0;
     }
   }
+  
 
   triggerFileInput(): void {
     this.fileInput.nativeElement.click();

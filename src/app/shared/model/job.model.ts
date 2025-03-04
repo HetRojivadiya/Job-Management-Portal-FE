@@ -6,6 +6,7 @@ export interface Skill {
   export interface Job {
     colorClass?: string|string[];
     applicationId? :string;
+    appliedAt? :string| Date;
     id: string;
     title: string;
     description: string;

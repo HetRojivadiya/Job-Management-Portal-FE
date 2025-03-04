@@ -13,9 +13,10 @@
         <ul class="space-y-2">
           <li>
             <a
-              href="/admin/dashboard"
-              class="menu-item text-green-700 text-sm flex items-center cursor-pointer bg-[#d9f3ea] hover:bg-[#d9f3ea] rounded-md px-3 py-3 transition-all duration-300"
-            >
+            routerLink="/admin/dashboard"
+            routerLinkActive="text-green-700 bg-[#d9f3ea]"
+            class="menu-item text-sm flex items-center cursor-pointer hover:bg-[#d9f3ea] rounded-md px-3 py-3 transition-all duration-300"
+          >
               <svg
                 xmlns="http://www.w3.org/2000/svg"
                 fill="currentColor"
@@ -36,9 +37,10 @@
           </li>
           <li>
             <a
-              href="javascript:void(0)"
-              class="menu-item text-gray-800 text-sm flex items-center cursor-pointer hover:bg-[#d9f3ea] rounded-md px-3 py-3 transition-all duration-300"
-            >
+            routerLink="/admin/joblist"
+            routerLinkActive="text-green-700 bg-[#d9f3ea]"
+            class="menu-item text-sm flex items-center cursor-pointer hover:bg-[#d9f3ea] rounded-md px-3 py-3 transition-all duration-300"
+          >
               <svg
                 xmlns="http://www.w3.org/2000/svg"
                 fill="currentColor"
@@ -73,7 +75,7 @@
           </li>
           <li>
             <a
-              href="javascript:void(0)"
+            routerLink="/admin/chart"
               class="menu-item text-gray-800 text-sm flex items-center cursor-pointer hover:bg-[#d9f3ea] rounded-md px-3 py-3 transition-all duration-300"
             >
               <svg
@@ -93,7 +95,7 @@
                   data-original="#000000"
                 />
               </svg>
-              <span>Job Applications</span>
+              <span>Job Applications Analysis</span>
             </a>
           </li>
           <li>

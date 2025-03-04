@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { API_ENDPOINTS } from '../../shared/constants/api-endpoints.constants';
-import { SignupRequest, SignupResponse, SigninRequest, SigninResponse, Disable2FAResponse, Enable2FAResponse, VerifyOtpRequest, VerifyOtpResponse, VerifyTokenRequest, VerifyTokenResponse } from '../../auth/index';
+import { SignupRequest, SignupResponse, SigninRequest, SigninResponse, Disable2FAResponse, Enable2FAResponse, VerifyOtpRequest, VerifyOtpResponse, VerifyTokenRequest, VerifyTokenResponse, ForgotPasswordResponse, ResetPasswordResponse, ResetPasswordRequest, ForgotPasswordRequest } from '../../auth/index';
 import { ApiService } from './api.service';
 import { HttpHeaders } from '@angular/common/http';
 
@@ -44,5 +44,13 @@ export class AuthService {
 
   getRole(): Observable<{ statusCode: number; message: string; data: string }> {
     return this.apiService.get<{ statusCode: number; message: string; data: string }>(API_ENDPOINTS.CHECK_ROLE);
+  }
+
+  forgotPassword(forgotPasswordRequest : ForgotPasswordRequest): Observable<ForgotPasswordResponse> {
+    return this.apiService.post<ForgotPasswordResponse>(API_ENDPOINTS.FORGOT_PASSWORD, forgotPasswordRequest.email);
+  }
+
+  resetPassword(resetPasswordRequest : ResetPasswordRequest): Observable<ResetPasswordResponse> {
+    return this.apiService.post<ResetPasswordResponse>(API_ENDPOINTS.RESET_PASSWORD,resetPasswordRequest);
   }
 }

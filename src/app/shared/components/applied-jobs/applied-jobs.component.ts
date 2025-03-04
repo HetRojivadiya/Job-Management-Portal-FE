@@ -4,6 +4,7 @@ import { Job } from '../../model/job.model';
 import { take, takeUntil } from 'rxjs/operators';
 import { Subject } from 'rxjs';
 import { ChangeApplicationStatus } from '../../model/job-application.model';
+import { ERROR } from '../../constants/error.constants';
 
 @Component({
   selector: 'app-applied-jobs',
@@ -79,7 +80,7 @@ export class AppliedJobsComponent implements OnInit {
 
   updateStatus(status: string) {
     if (status === 'Rejected' && !this.rejectReason.trim()) {
-      this.errorMessage = 'Please provide a reason for rejection.';
+      this.errorMessage = ERROR.PROVIDE_REASON_FOR_REJECTION;
       return;
     }
     this.errorMessage = '';
@@ -96,17 +97,16 @@ export class AppliedJobsComponent implements OnInit {
 
   changeApplicationStatus(statusData: ChangeApplicationStatus): void {
     this.jobApplicationService
-    .changeApplicationStatus(statusData)
-    .pipe(takeUntil(this.destroy))
-    .subscribe({
-      next: () => {
-        this.fetchAppliedJobs(),
-        this.selectedJob=null;
-      },
-      error: (err) => {
-        throw err;
-      },
-    });
+      .changeApplicationStatus(statusData)
+      .pipe(takeUntil(this.destroy))
+      .subscribe({
+        next: () => {
+          this.fetchAppliedJobs(), (this.selectedJob = null);
+        },
+        error: (err) => {
+          throw err;
+        },
+      });
   }
 
   showJobDetails(job: Job) {

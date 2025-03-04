@@ -8,6 +8,8 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { VerifySuccessComponent } from './components/verify-success/verify-success.component';
 import { OtpComponent } from './components/otp/otp.component';
 import { Enable2FAComponent } from './components/enable2-fa/enable2-fa.component';
+import { ForgotPasswordComponent } from './components/forgot-password/forgot-password.component';
+import { ResetPasswordComponent } from './components/reset-password/reset-password.component';
 
 
 @NgModule({
@@ -16,7 +18,9 @@ import { Enable2FAComponent } from './components/enable2-fa/enable2-fa.component
     SigninComponent,
     VerifySuccessComponent,
     OtpComponent,
-    Enable2FAComponent
+    Enable2FAComponent,
+    ForgotPasswordComponent,
+    ResetPasswordComponent
   ],
   imports: [
     CommonModule,

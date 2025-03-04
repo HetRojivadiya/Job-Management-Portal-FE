@@ -15,18 +15,18 @@ import { DataGridComponent } from '../../../shared/components/data-grid/data-gri
 })
 export class UserListComponent implements OnInit, OnDestroy {
   @ViewChild('dataGrid') dataGrid!: DataGridComponent;
+
   private gridApi!: GridApi;
   users: UserResponse[] = [];
   private destroy = new Subject<void>();
   showColumnDropdown = false;
 
-  // Define columns without referencing `this`
   allColumns = [
     { headerName: 'Username', field: 'username', isVisible: true, sortable: true, filter: true, width: 320 },
     { headerName: 'Email', field: 'email', isVisible: true, sortable: true, filter: true, width: 250 },
     { headerName: 'Mobile', field: 'mobile', isVisible: true, sortable: true, filter: true, width: 150 },
     { headerName: 'Skills', field: 'skills', isVisible: true, sortable: false, filter: false, width: 280 },
-    { headerName: 'Total Applications', field: 'totalApplications', isVisible: true, sortable: true, filter: false, width: 320 },
+    { headerName: 'Total Applications', field: 'totalApplications', isVisible: true, sortable: true, filter: false, width: 300 },
     { headerName: 'Action', field: 'userId', isVisible: true, sortable: false, filter: false, width: 150 }
   ];
 
@@ -89,16 +89,17 @@ export class UserListComponent implements OnInit, OnDestroy {
   }
 
 
-  onCellClicked(event: any) {
-    if (event.colDef.field === 'userId' && event.event.target.classList.contains('view-details-btn')) {
-      const userId = event.event.target.getAttribute('data-user-id');
+  onCellClicked(event: { colDef: ColDef; event: MouseEvent }) {
+    if (event.colDef.field === 'userId' && (event.event.target as HTMLElement).classList.contains('view-details-btn')) {
+      const userId = (event.event.target as HTMLElement).getAttribute('data-user-id');
       if (userId) {
         this.router.navigate(['/profile', userId]);
       }
     }
   }
+  
 
-  static userCellRenderer(params: any) {
+  static userCellRenderer(params: { data: UserResponse }) {
     if (!params.data) return '';
     const avatar = params.data.userId ? 
       `images/avatar/avatar_${(params.data.userId.charCodeAt(0) % 24) + 1}.jpg` : 
@@ -123,7 +124,7 @@ export class UserListComponent implements OnInit, OnDestroy {
     this.gridApi.exportDataAsCsv(params);
   }
 
-  static emailCellRenderer(params: any) {
+  static emailCellRenderer(params: { data: UserResponse }) {
     if (!params.data) return '';
     return `
       <div class="leading-tight">
@@ -133,13 +134,13 @@ export class UserListComponent implements OnInit, OnDestroy {
     `;
   }
 
-  static skillsCellRenderer(params: any) {
+  static skillsCellRenderer(params: { data: UserResponse }) {
     if (!params.data || !params.data.skills) return '';
     if (params.data.skills.length === 0) {
       return '<span class="text-gray-500 text-xs">No Skills</span>';
     }
     let html = '<div class="flex flex-wrap gap-1">';
-    params.data.skills.slice(0, 3).forEach((skill: any) => {
+    params.data.skills.slice(0, 3).forEach((skill) => {
       html += `<span class="bg-gray-200 px-2 py-1 rounded text-xs shadow-sm">${skill.skillName || ''}</span>`;
     });
     if (params.data.skills.length > 3) {
@@ -149,7 +150,7 @@ export class UserListComponent implements OnInit, OnDestroy {
     return html;
   }
 
-  static applicationsCellRenderer(params: any) {
+  static applicationsCellRenderer(params: { data: UserResponse }) {
     if (!params.data || !params.data.totalApplications) return '';
     const apps = params.data.totalApplications;
     const percent = (apps.value / 21) * 100;
@@ -163,7 +164,7 @@ export class UserListComponent implements OnInit, OnDestroy {
     `;
   }
 
-  static actionCellRenderer(params: any) {
+  static actionCellRenderer(params: { data: UserResponse }) {
     if (!params.data) return '';
     const userId = params.data.userId || '';
     return `

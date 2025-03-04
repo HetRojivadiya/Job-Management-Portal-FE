@@ -8,11 +8,8 @@
       (apply)="applyJob.emit($event)">
     </app-job-item>
   </div>
-  
 
-  <!--  i want here ag grid job list when i logged in with admin -->
-
-  <app-data-grid
+  <app-data-grid *ngIf="isAdmin"
   #dataGrid
   [title]="'Job List'"
   [rowData]="jobs"
@@ -25,4 +22,4 @@
   (gridReady)="onGridReady($event)"
   (exportCsv)="exportToCsv()"
   (cellClicked)="onCellClicked($event)" 
-></app-data-grid>
+  />

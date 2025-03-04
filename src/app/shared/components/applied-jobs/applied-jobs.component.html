@@ -1,7 +1,8 @@
 <div class="flex-1 bg-white rounded-lg shadow-xl p-8">
   <h4 class="text-xl text-gray-900 font-bold">Applied Jobs</h4>
+  <div>
   <div class="grid grid-cols-1 lg:grid-cols-3 gap-8 mt-4 mb-6">
-    <div class="px-6 py-6 bg-gray-100 border border-gray-300 rounded-lg shadow-xl">
+    <div class="px-6 py-6 bg-gray-100 border border-gray-300 rounded-lg shadow-xl max-h-52 overflow-hidden">
       <div class="flex items-center justify-between">
         <span class="font-bold text-sm text-green-600">Approved Applications</span>
         <span class="text-xs bg-gray-200 hover:bg-gray-500 text-gray-500 hover:text-gray-200 px-2 py-1 rounded-lg transition duration-200 cursor-default">7 days</span>
@@ -22,7 +23,8 @@
         </div>
       </div>
     </div>
-    <div class="px-6 py-6 bg-gray-100 border border-gray-300 rounded-lg shadow-xl">
+    
+    <div class="px-6 py-6 bg-gray-100 border border-gray-300 max-h-52 rounded-lg shadow-xl">
       <div class="flex items-center justify-between">
         <span class="font-bold text-sm text-blue-600">Pending Applications</span>
         <span class="text-xs bg-gray-200 hover:bg-gray-500 text-gray-500 hover:text-gray-200 px-2 py-1 rounded-lg transition duration-200 cursor-default">7 days</span>
@@ -44,14 +46,20 @@
         </div>
       </div>
     </div>
+    <app-application-status-chart *ngIf="isCandidate"></app-application-status-chart>
+
   </div>
+ 
+  </div>
+ 
   <div class="flex flex-col lg:flex-row gap-6 mt-6">
     <div class="w-full lg:w-2/5">
+      <div class="max-h-[600px] overflow-y-auto scrollbar-thin scrollbar-thumb-gray-400 scrollbar-track-gray-200">
       <div *ngFor="let job of appliedJobs; let i = index" class="px-6 py-6 bg-white border border-gray-200 mt-2 rounded-xl shadow-lg hover:shadow-xl transition-shadow duration-300">
         <div class="flex items-center justify-between">
           <span class="font-semibold text-md text-blue-700">{{ job.title }}</span>
           <span class="text-xs bg-blue-50 text-blue-600 px-3 py-1 rounded-full font-medium border border-blue-100">
-            {{ job.deadline | date: 'shortDate' }}
+            {{ job.appliedAt| date }}
           </span>
         </div>
         <div class="mt-4">
@@ -81,6 +89,8 @@
         </div>
       </div>
     </div>
+    </div>
+    
     <div *ngIf="selectedJob" class="w-full lg:w-3/5 bg-white border border-gray-200 rounded-xl shadow-lg p-6 lg:sticky lg:top-4 lg:self-start">
       <div class="flex justify-between items-start">
         <div>
@@ -102,7 +112,7 @@
           </div>
         </div>
         <span class="text-sm bg-blue-50 text-blue-600 px-3 py-1 rounded-full font-medium border border-blue-100">
-          {{ selectedJob.deadline | date: 'shortDate' }}
+          {{ selectedJob.appliedAt | date }}
         </span>
       </div>
       <div class="mt-6">
@@ -147,7 +157,7 @@
           <button (click)="closeJobDetails()" class="px-4 py-2 bg-gray-200 hover:bg-gray-300 text-gray-700 text-sm font-medium rounded-lg transition duration-200">
             Back to List
           </button>
-          <button *ngIf="isCandidate" (click)="selectedJob.applicationId ? deleteAppliedJob(selectedJob.applicationId) : null" class="px-4 py-2 bg-red-600 hover:bg-red-700 text-white text-sm font-medium rounded-lg transition duration-200">
+          <button *ngIf="isCandidate && (selectedJob.status!=='Rejected' && selectedJob.status!=='Approved')" (click)="selectedJob.applicationId ? deleteAppliedJob(selectedJob.applicationId) : null" class="px-4 py-2 bg-red-600 hover:bg-red-700 text-white text-sm font-medium rounded-lg transition duration-200">
             Cancel Application
           </button>
            <button *ngIf="!isCandidate" (click)="openModal()" class="px-4 py-2 bg-yellow-500 hover:bg-yello-700 text-white text-sm font-medium rounded-lg transition duration-200">

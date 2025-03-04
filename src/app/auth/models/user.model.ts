@@ -62,3 +62,23 @@ export interface VerifyTokenRequest {
 export interface VerifyTokenResponse {
     status: boolean;
 }
+
+
+export interface ForgotPasswordRequest {
+    email : string;
+}
+
+export interface ForgotPasswordResponse {
+    statusCode :number;
+    message :string;
+}
+
+export interface ResetPasswordRequest {
+    newPassword: string;
+    token: string;
+}
+
+export interface ResetPasswordResponse {
+    statusCode :number;
+    message :string;
+}

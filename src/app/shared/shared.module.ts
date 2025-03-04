@@ -18,13 +18,15 @@ import { RouterModule } from '@angular/router';
 import { RecommandedJobsComponent } from './components/recommanded-jobs/recommanded-jobs.component';
 import { TimeAgoPipe } from './pipes/time-ago.pipe';
 
-import { ExampleComponent } from './components/example/example.component';
 import { AgGridAngular } from 'ag-grid-angular';
 import { DataGridComponent } from './components/data-grid/data-grid.component'; 
+import { ApplicantsListComponent } from './components/applicants-list/applicants-list.component';
+import { ApplicationStatusChartComponent } from './components/application-status-chart/application-status-chart.component';
+import { JobApplicationChartComponent } from './components/job-application-chart/job-application-chart.component';
 
 
 @NgModule({
-  declarations: [JobUpdateModalComponent, ConfirmDialogComponent, JobContainerComponent, JobListComponent, JobItemComponent, ProfileComponent, AddSkillModalComponent, ResumeComponent, ResumeModalComponent, AppliedJobsComponent, JobCreateModalComponent, JobApplyModalComponent, JobDetailsComponent, RecommandedJobsComponent, ExampleComponent, DataGridComponent, ],
+  declarations: [JobUpdateModalComponent, ConfirmDialogComponent, JobContainerComponent, JobListComponent, JobItemComponent, ProfileComponent, AddSkillModalComponent, ResumeComponent, ResumeModalComponent, AppliedJobsComponent, JobCreateModalComponent, JobApplyModalComponent, JobDetailsComponent, RecommandedJobsComponent, DataGridComponent,ApplicantsListComponent, ApplicationStatusChartComponent, JobApplicationChartComponent ],
   imports: [
     CommonModule,
       FormsModule,
@@ -33,6 +35,6 @@ import { DataGridComponent } from './components/data-grid/data-grid.component';
       TimeAgoPipe,
       AgGridAngular,
   ],
-  exports: [JobContainerComponent,ProfileComponent,JobCreateModalComponent,JobDetailsComponent,TimeAgoPipe,DataGridComponent],  
+  exports: [JobContainerComponent,ProfileComponent,JobCreateModalComponent,JobDetailsComponent,TimeAgoPipe,DataGridComponent ,ApplicantsListComponent,JobApplicationChartComponent],  
 })
 export class SharedModule { }

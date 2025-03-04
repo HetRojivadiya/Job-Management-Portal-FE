@@ -94,10 +94,16 @@
           </section>
         </div>
       </div>
-      <div class="w-90 shrink-0">
-        <h2 class="text-lg font-semibold mb-4">Similar Jobs</h2>
+      <div *ngIf="isCandidate" class="w-90 shrink-0">
+        <h2 class="text-2xl font-semibold mb-4 mt-4">Similar Jobs</h2>
         <div class="max-h-[800px] overflow-y-auto pr-2">
         <app-recommanded-jobs/>
+      </div>
+    </div>
+      <div *ngIf="!isCandidate" class="w-90 shrink-0">
+        <h2 class="text-2xl font-semibold mb-4 mt-4">Applications</h2>
+        <div class="max-h-[800px] overflow-y-auto pr-2">
+        <app-applicants-list [jobId]="jobId"/>
       </div>
     </div>
   </div>
