@@ -10,14 +10,12 @@ import { LoggerService } from '../../../core/services/logger.service';
 import { ROUTES } from '../../constants/routes';
 import { take } from 'rxjs';
 
-
 @Component({
   selector: 'app-register',
   standalone: false,
   templateUrl: './signup.component.html',
   styleUrl: './signup.component.scss',
 })
-
 
 export class SignupComponent {
   signupForm: FormGroup;
@@ -32,7 +30,7 @@ export class SignupComponent {
     private toastr: ToastrService,
     private logger: LoggerService,
   ) {
-    this.signupForm = this.fb.nonNullable.group(
+    this.signupForm = this.fb.group(
       {
         username: ['', [Validators.required, Validators.minLength(4)]],
         email: ['', [Validators.required, Validators.email]],

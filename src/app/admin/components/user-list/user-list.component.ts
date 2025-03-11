@@ -78,7 +78,6 @@ export class UserListComponent implements OnInit, OnDestroy {
     return { value: randomValue, color };
   }
 
-
   ngOnDestroy() {
     this.destroy.next();
     this.destroy.complete();
@@ -88,7 +87,6 @@ export class UserListComponent implements OnInit, OnDestroy {
     this.gridApi = gridApi;
   }
 
-
   onCellClicked(event: { colDef: ColDef; event: MouseEvent }) {
     if (event.colDef.field === 'userId' && (event.event.target as HTMLElement).classList.contains('view-details-btn')) {
       const userId = (event.event.target as HTMLElement).getAttribute('data-user-id');
@@ -97,7 +95,6 @@ export class UserListComponent implements OnInit, OnDestroy {
       }
     }
   }
-  
 
   static userCellRenderer(params: { data: UserResponse }) {
     if (!params.data) return '';

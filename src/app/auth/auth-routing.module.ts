@@ -5,7 +5,6 @@ import { SignupComponent } from './components/signup/signup.component';
 import { VerifySuccessComponent } from './components/verify-success/verify-success.component';
 import { Enable2FAComponent } from './components/enable2-fa/enable2-fa.component';
 import { OtpComponent } from './components/otp/otp.component';
-import { loggedInGuard } from '../core/guards/logged-in.guard';
 import { authGuard } from '../core/guards/auth.guard';
 import { ROUTING } from './constants/routes';
 
